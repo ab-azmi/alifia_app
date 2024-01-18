@@ -28,16 +28,18 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
                         
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-6">
+                    <div class="flex space-x-2 lg:space-x-6">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                         <a href="#" class=" text-primary rounded-md px-3 py-2 text-sm font-bold"
-                            aria-current="page">Dashboard</a>
+                            aria-current="page">Beranda</a>
                         <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Team</a>
+                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Tentang Kami</a>
                         <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Projects</a>
+                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Konseling</a>
                         <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Calendar</a>
+                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Cari Psikolog</a>
+                        <a href="#"
+                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Riwayat</a>
                     </div>
                 </div>
             </div>
