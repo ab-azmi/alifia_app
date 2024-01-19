@@ -16,14 +16,12 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-gray-900 antialiased h-full">
-    <x-top-bar/>
+<body class="font-axiforma text-gray-900 antialiased h-full">
 
-    <div class="w-full py-4 overflow-hidden">
+    <div class="w-full overflow-hidden">
         {{ $slot }}
     </div>
 
-    <x-footer/>
 </body>
 
 </html>

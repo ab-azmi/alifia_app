@@ -5,7 +5,7 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
                 <!-- Mobile menu button-->
                 <button type="button" @click.prevent="open = !open"
-                    class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    class="relative inline-flex items-center justify-center rounded-md p-2 text-primary hover:bg-primary hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     aria-controls="mobile-menu" aria-expanded="false">
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
@@ -85,10 +85,10 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
                     </div>
                 </div> --}}
 
-                <button type="button"
+                <a href="/login"
                     class="relative px-6 py-2 bg-gradient-to-r from-primary to-secondary text-white font-medium rounded-md">
                     Login
-                </button>
+                </a>
             </div>
         </div>
     </div>
@@ -97,14 +97,14 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
     <div class="sm:hidden" id="mobile-menu" x-show="open">
         <div class="space-y-1 px-2 pb-3 pt-2" >
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium"
+            <a href="#" class="text-primary block rounded-md px-3 py-2 text-base font-medium"
                 aria-current="page">Dashboard</a>
             <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
+                class="text-slate-800 hover:text-primary block rounded-md px-3 py-2 text-base font-medium">Team</a>
             <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
+                class="text-slate-800 hover:text-primary block rounded-md px-3 py-2 text-base font-medium">Projects</a>
             <a href="#"
-                class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+                class="text-slate-800 hover:text-primary block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
         </div>
     </div>
 </nav>

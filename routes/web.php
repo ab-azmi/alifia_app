@@ -17,6 +17,19 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing.index');
 });
+Route::get('/landing-tentang', function () {
+    return view('landing.tentang');
+});
+Route::get('/landin-konseling', function () {
+    return view('landing.konesling');
+});
+Route::get('/landing-psikolog', function () {
+    return view('landing.psikolog');
+});
+Route::get('/landing-riwayat', function () {
+    return view('landing.riwayat');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');

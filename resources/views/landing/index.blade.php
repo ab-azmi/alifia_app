@@ -1,11 +1,13 @@
 <x-guest-layout>
+    <x-top-bar/>
+
     {{-- Hero Section --}}
     <div class="flex lg:flex-row flex-col gap-8 lg:gap-4 px-4 lg:px-32 m-auto py-5 md:py-10 lg:py-24 justify-between">
         <div class="w-full flex flex-col gap-y-5 md:gap-y-10 items-center lg:items-start text-center lg:text-start">
-            <h1 class="text-2xl md:text-4xl lg:text-5xl lg:leading-normal text-display font-black">
+            <h1 class="text-2xl font-axiforma md:text-4xl lg:text-5xl lg:leading-normal text-display font-black">
                 Supporting Mental Health, Building Emotional Well-being
             </h1>
-            <h4 class="text-base md:text-lg lg:text-xl lg:max-w-[90%] text-slate-500 font-medium">
+            <h4 class="text-base md:text-lg leading-relaxed lg:text-xl lg:max-w-[90%] text-slate-500 font-medium">
                 Selamat datang di pusat konseling mahasiswa UNNES! Kami hadir untuk mendukung kesejahteraan anda 
                 dalam menemukan konselor berpengalaman dan ruang aman untuk berbicara.
             </h4>
@@ -21,7 +23,7 @@
     </div>
 
     {{-- Sesi Aktif --}}
-    <div class="mb-20 px-10 lg:px-32 flex lg:flex-row flex-col gap-10 lg:items-start items-center">
+    <div class="mb-20 px-10 lg:px-32 flex lg:flex-row flex-col gap-10 items-center lg:items-stretch">
         <div class="max-w-md shadow-lg rounded-lg overflow-hidden">
             <div class="bg-primary py-3 px-4 text-center">
                 <h1 class="text-white font-black text-xl">Konsultasi Berlangsung</h1>
@@ -81,9 +83,9 @@
         <div class="absolute top-1 left-0">
             <img src="{{ asset('assets/images/dotgrid.svg') }}" alt="" srcset="" class="w-32">
         </div>
-        <div class="w-fit m-auto text-center flex flex-col gap-4">
-            <h1 class="font-bold text-primary text-2xl before:content-['Ten'] before:bg-lightprimary before:pl-10 before:py-1">tang Kami</h1>
-            <h1 class="text-4xl font-black text-display">Kemudahan Dalam Layanan Kami</h1>
+        <div class="w-fit font-axiforma m-auto text-center flex flex-col gap-4">
+            <h1 class="font-bold tracking-widest text-primary text-2xl before:content-['Ten'] before:bg-lightprimary before:pl-10 before:py-1">tang Kami</h1>
+            <h1 class="text-4xl font-bold text-display">Kemudahan Dalam Layanan Kami</h1>
         </div>
         <div class="flex gap-12 lg:flex-row flex-col items-center">
             <div class="w-full lg:w-1/3 flex gap-5 items-center text-center flex-col">
@@ -119,10 +121,10 @@
 
     {{-- Layanan Konseling --}}
     <div class="py-20 px-16 flex flex-col gap-y-20">
-        <div class="w-fit m-auto text-center flex flex-col gap-4">
-            <h1 class="font-bold text-primary text-2xl before:content-['Laya'] before:bg-lightprimary before:pl-10 before:py-1">nan Konseling
+        <div class="w-fit font-axiforma m-auto text-center flex flex-col gap-4">
+            <h1 class="font-bold tracking-widest text-primary text-2xl before:content-['Laya'] before:bg-lightprimary before:pl-10 before:py-1">nan Konseling
             </h1>
-            <h1 class="text-4xl font-black text-display">Layanan Utama Kami Untuk Anda</h1>
+            <h1 class="text-4xl font-bold text-display">Layanan Utama Kami Untuk Anda</h1>
         </div>
         <div class="flex gap-10 justify-center lg:flex-row flex-col items-center lg:items-stretch">
             <div class="md:w-[35%] w-full rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
@@ -160,17 +162,17 @@
     {{-- Cari Psikolog --}}
     <div class="bg-white w-full px-16 pt-20">
         <div class="w-fit m-auto text-center flex flex-col gap-4">
-            <h1 class="font-bold text-primary text-2xl before:content-['C'] before:bg-lightprimary before:pl-10 before:py-1">ari Psikolog
+            <h1 class="font-bold tracking-widest text-primary text-2xl before:content-['C'] before:bg-lightprimary before:pl-10 before:py-1">ari Psikolog
             </h1>
-            <h1 class="text-4xl font-black text-display">Rekomendasi Psikolog</h1>
+            <h1 class="text-4xl font-bold text-display">Rekomendasi Psikolog</h1>
         </div>
-        <div class="flex lg:flex-row flex-col items-center justify-center gap-7 mt-14">
+        <div class="flex lg:flex-row flex-col items-center lg:items-stretch justify-center gap-7 mt-14">
             <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
                 <div>
                     <img src="{{ asset('assets/images/girl1.jpg') }}" alt="" srcset="" class="rounded-full w-44 h-44 object-cover">
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-black text-2xl">Lusiana M.Psi., Psikolog</h1>
+                    <h1 class="text-primary font-bold text-2xl">Lusiana M.Psi., Psikolog</h1>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8"/></svg>
@@ -195,7 +197,7 @@
                     <img src="{{ asset('assets/images/ethan.png') }}" alt="" srcset="" class="rounded-full w-44 h-44 object-cover">
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-black text-2xl">Budiman M.Psi., Psikolog</h1>
+                    <h1 class="text-primary font-bold text-2xl">Budiman M.Psi., Psikolog</h1>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8"/></svg>
@@ -220,7 +222,7 @@
                     <img src="{{ asset('assets/images/girl2.jpg') }}" alt="" srcset="" class="rounded-full w-44 h-44 object-cover">
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-black text-2xl">Amanda M.Psi., Psikolog</h1>
+                    <h1 class="text-primary font-bold text-2xl">Amanda M.Psi., Psikolog</h1>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8"/></svg>
@@ -246,5 +248,7 @@
             <div class="w-[50%] m-auto h-1 bg-lightprimary"></div>
         </div>
     </div>
+
+    <x-footer/>
     
 </x-guest-layout>
