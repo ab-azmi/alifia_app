@@ -13,6 +13,16 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                axiforma: ['Axiforma', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                primary: '#5271FF',
+                secondary: '#6BE5E8',
+                tertiary: '#F7F8FC',
+                display: '#134E6E',
+                icongreen: '#3691A6',
+                lightprimary: '#DBE5FF',
+                darkprimary: '#101A7B',
             },
         },
     },
