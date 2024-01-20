@@ -189,7 +189,7 @@
                 </div>
                 <div class="flex gap-4 w-full mt-6">
                     <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">Ada</div>
-                    <a href="#" class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
+                    <a href="/booking/1" class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
                 </div>
             </div>
             <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">

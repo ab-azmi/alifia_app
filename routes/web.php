@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,14 @@ Route::get('/landing-psikolog', function () {
 Route::get('/landing-riwayat', function () {
     return view('landing.riwayat');
 })->name('landing-riwayat');
+
+Route::get('/booking/{psikolog}', function () {
+    return view('landing.booking');
+})->name('booking');
+
+Route::post('/book-test', function(Request $request) {
+    dd($request->all());
+})->name('book-test');
 
 
 Route::get('/dashboard', function () {
