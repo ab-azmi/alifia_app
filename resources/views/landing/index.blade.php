@@ -79,7 +79,7 @@
     </div>
 
     {{-- Tentang Kami Section--}}
-    <div class="bg-white w-full px-16 pt-20 pb-36 flex flex-col gap-y-20 relative">
+    <div id="tentang_kami" class="bg-white w-full px-16 pt-20 pb-36 flex flex-col gap-y-20 relative">
         <div class="absolute top-1 left-0">
             <img src="{{ asset('assets/images/dotgrid.svg') }}" alt="" srcset="" class="w-32">
         </div>
@@ -120,7 +120,7 @@
     </div>
 
     {{-- Layanan Konseling --}}
-    <div class="py-20 px-16 flex flex-col gap-y-20">
+    <div id="konseling" class="py-20 px-16 flex flex-col gap-y-20">
         <div class="w-fit font-axiforma m-auto text-center flex flex-col gap-4">
             <h1 class="font-bold tracking-widest text-primary text-2xl before:content-['Laya'] before:bg-lightprimary before:pl-10 before:py-1">nan Konseling
             </h1>

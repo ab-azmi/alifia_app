@@ -1,5 +1,5 @@
 <nav class="bg-white dark:bg-gray-800" x-data="{ open: false }"
-x-init="$watch('window.innerWidth', value => { open = value < 600 })">
+    x-init="$watch('window.innerWidth', value => { open = value < 600 })">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -10,14 +10,14 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
 
-                    <svg class="block h-6 w-6" :class="{'hidden': open}" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
+                    <svg class="block h-6 w-6" :class="{'hidden': open}" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round"
                             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
                     </svg>
-    
-                    <svg class="hidden h-6 w-6" :class="{'hidden': !open}" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                        aria-hidden="true">
+
+                    <svg class="hidden h-6 w-6" :class="{'hidden': !open}" fill="none" viewBox="0 0 24 24"
+                        stroke-width="1.5" stroke="currentColor" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -25,25 +25,59 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
                 <div class="flex flex-shrink-0 items-center">
                     <img class="h-10 w-auto" src="{{ asset('assets/images/logo.png') }}" alt="Your Company">
-                        
+
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
-                    <div class="flex space-x-2 lg:space-x-6">
+                    <div class="flex space-x-2 lg:space-x-6 items-center">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="{{ route('landing') }}"  @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing')])
+                        <a href="{{ route('landing') }}" @class(['rounded-md px-3 py-2
+                            text-sm', 'text-primary font-bold'=> request()->routeIs('landing'), 'text-slate-800
+                            hover:text-primary dark:text-white' => !request()->routeIs('landing')])
                             aria-current="page">Beranda</a>
 
-                        <a href="{{ route('landing-tentang') }}"
-                        @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-tentang'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-tentang')])>Tentang Kami</a>
+                        <a href="{{ route('landing') }}#tentang_kami" @class(['rounded-md px-3 py-2
+                            text-sm', 'text-primary font-bold'=> request()->routeIs('landing-tentang'), 'text-slate-800
+                            hover:text-primary dark:text-white' => !request()->routeIs('landing-tentang')])>Tentang
+                            Kami</a>
 
-                        <a href="{{ route('landing-konseling') }}"
-                            @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-konseling'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-konseling')])>Konseling</a>
+                        <a href="{{ route('landing') }}#konseling" @class(['rounded-md px-3 py-2
+                            text-sm', 'text-primary font-bold'=> request()->routeIs('landing-konseling'),
+                            'text-slate-800 hover:text-primary dark:text-white' =>
+                            !request()->routeIs('landing-konseling')])>Konseling</a>
 
-                        <a href="{{ route('landing-psikolog') }}"
-                        @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-psikolog'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-psikolog')])>Cari Psikolog</a>
+                        <a href="{{ route('landing-psikolog') }}" @class(['rounded-md px-3 py-2
+                            text-sm', 'text-primary font-bold'=> request()->routeIs('landing-psikolog'), 'text-slate-800
+                            hover:text-primary dark:text-white' => !request()->routeIs('landing-psikolog')])>Cari
+                            Psikolog</a>
 
-                        <a href="{{ route('landing-riwayat') }}"
-                        @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-riwayat'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])>Riwayat</a>
+                        <div class="relative ml-3" x-data="{isOpen: false}">
+                            <div>
+                                <button @click.prevent="isOpen = !isOpen" @class(['rounded-md px-3 py-2
+                                    text-sm flex items-center', 'text-primary font-bold'=> request()->routeIs('landing-riwayat'),
+                                    'text-slate-800
+                                    hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])>
+                                    Riwayat
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="m12 15l-5-5h10z"/></svg>
+                                </button>
+                            </div>
+
+                            <div x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
+                                x-transition:enter-start="opacity-0 scale-95"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-75 transform"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-95"
+                                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                tabindex="-1">
+                                <!-- Active: "bg-gray-100", Not Active: "" -->
+                                <a href="{{ route('landing-riwayat') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                    id="user-menu-item-0">Konseling Online</a>
+                                <a href="{{ route('landing-riwayat') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1"
+                                    id="user-menu-item-1">Konseling Offline</a>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -99,16 +133,29 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
 
     <!-- Mobile menu, show/hide based on menu state. -->
     <div class="sm:hidden" id="mobile-menu" x-show="open">
-        <div class="space-y-1 px-2 pb-3 pt-2" >
+        <div class="space-y-1 px-2 pb-3 pt-2">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" class="text-primary block rounded-md px-3 py-2 text-base font-medium"
-                aria-current="page">Dashboard</a>
-            <a href="#"
-                class="text-slate-800 hover:text-primary block rounded-md px-3 py-2 text-base font-medium">Team</a>
-            <a href="#"
-                class="text-slate-800 hover:text-primary block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-            <a href="#"
-                class="text-slate-800 hover:text-primary block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
+            <a href="{{ route('landing') }}" @class(['block rounded-md px-3 py-2 text-base
+                font-medium', 'text-primary font-bold'=> request()->routeIs('landing'), 'text-slate-800
+                hover:text-primary dark:text-white' => !request()->routeIs('landing')])
+                aria-current="page">Beranda</a>
+            <a href="{{ route('landing') }}#tentang_kami" @class(['block rounded-md px-3 py-2 text-base
+                font-medium', 'text-primary font-bold'=> request()->routeIs('landing-tentang'), 'text-slate-800
+                hover:text-primary dark:text-white' => !request()->routeIs('landing-tentang')])
+                aria-current="page">Tentang Kami</a>
+            <a href="{{ route('landing') }}#konseling" @class(['block rounded-md px-3 py-2 text-base
+                font-medium', 'text-primary font-bold'=> request()->routeIs('landing-konseling'), 'text-slate-800
+                hover:text-primary dark:text-white' => !request()->routeIs('landing-konseling')])
+                aria-current="page">Konseling</a>
+            <a href="{{ route('landing-psikolog') }}" @class(['block rounded-md px-3 py-2 text-base
+                font-medium', 'text-primary font-bold'=> request()->routeIs('landing-psikolog'), 'text-slate-800
+                hover:text-primary dark:text-white' => !request()->routeIs('landing-psikolog')])
+                aria-current="page">Cari Psikolog</a>
+            <a href="{{ route('landing-riwayat') }}" @class(['block rounded-md px-3 py-2 text-base
+                font-medium', 'text-primary font-bold'=> request()->routeIs('landing-riwayat'), 'text-slate-800
+                hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])
+                aria-current="page">Riwayat</a>
+
         </div>
     </div>
 </nav>

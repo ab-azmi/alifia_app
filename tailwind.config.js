@@ -23,7 +23,7 @@ export default {
                 icongreen: '#3691A6',
                 lightprimary: '#DBE5FF',
                 darkprimary: '#101A7B',
-            }
+            },
         },
     },
 

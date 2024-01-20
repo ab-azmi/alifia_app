@@ -2,14 +2,13 @@
     <x-top-bar />
     <div class="w-fit m-auto text-center flex flex-col gap-4 my-10">
         <h1
-            class="font-bold tracking-widest text-primary text-2xl before:content-['Boo'] before:bg-lightprimary before:pl-10 before:py-1">
-            king Psikolog
+            class="font-bold tracking-widest text-primary text-2xl before:content-['Boo'] before:bg-lightprimary before:pl-10 before:py-1">king Psikolog
         </h1>
         <h1 class="text-4xl font-bold text-display">Lakukan Pemesanan Layanan</h1>
     </div>
 
-    <div class="flex px-20 my-20">
-        <div class="w-1/2 text-center">
+    <div class="flex px-4 md:px-20 gap-10 lg:gap-0 my-20 lg:flex-row flex-col">
+        <div class="w-full lg:w-1/2 text-center">
             <h1 class="text-2xl font-bold mb-10">Detail Psikolog</h1>
             <div class="md:w-fit m-auto rounded-xl shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
                 <div>
@@ -41,7 +40,7 @@
 
             </div>
         </div>
-        <div class="w-1/2 text-center">
+        <div class="w-full lg:w-1/2 text-center">
             <h1 class="text-2xl font-bold mb-10">Informasi Pemesanan</h1>
             <form action="/book-test" class="w-full m-auto flex flex-col gap-y-4" method="POST">
                 @csrf
