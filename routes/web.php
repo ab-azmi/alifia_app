@@ -16,19 +16,23 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('landing.index');
-});
+})->name('landing');
+
 Route::get('/landing-tentang', function () {
     return view('landing.tentang');
-});
+})->name('landing-tentang');
+
 Route::get('/landin-konseling', function () {
-    return view('landing.konesling');
-});
+    return view('landing.konseling');
+})->name('landing-konseling');
+
 Route::get('/landing-psikolog', function () {
     return view('landing.psikolog');
-});
+})->name('landing-psikolog');
+
 Route::get('/landing-riwayat', function () {
     return view('landing.riwayat');
-});
+})->name('landing-riwayat');
 
 
 Route::get('/dashboard', function () {

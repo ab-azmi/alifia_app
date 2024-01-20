@@ -30,16 +30,20 @@ x-init="$watch('window.innerWidth', value => { open = value < 600 })">
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-2 lg:space-x-6">
                         <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                        <a href="#" class=" text-primary rounded-md px-3 py-2 text-sm font-bold"
+                        <a href="{{ route('landing') }}"  @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing')])
                             aria-current="page">Beranda</a>
-                        <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Tentang Kami</a>
-                        <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Konseling</a>
-                        <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Cari Psikolog</a>
-                        <a href="#"
-                            class="text-slate-800 dark:text-white hover:text-primary rounded-md px-3 py-2 text-sm font-bold">Riwayat</a>
+
+                        <a href="{{ route('landing-tentang') }}"
+                        @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-tentang'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-tentang')])>Tentang Kami</a>
+
+                        <a href="{{ route('landing-konseling') }}"
+                            @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-konseling'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-konseling')])>Konseling</a>
+
+                        <a href="{{ route('landing-psikolog') }}"
+                        @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-psikolog'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-psikolog')])>Cari Psikolog</a>
+
+                        <a href="{{ route('landing-riwayat') }}"
+                        @class(['rounded-md px-3 py-2 text-sm', 'text-primary font-bold' => request()->routeIs('landing-riwayat'), 'text-slate-800 hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])>Riwayat</a>
                     </div>
                 </div>
             </div>
