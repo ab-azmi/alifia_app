@@ -16,11 +16,29 @@ class Conversation extends Model
         return $this->hasMany(Message::class);
     }
 
-    public function getReceiver(){
-        if($this->sender_id == auth()->id()){
+    public function getReceiver()
+    {
+        if ($this->sender_id == auth()->id()) {
             return User::firstWhere('id', $this->receiver_id);
-        }else{
+        } else {
             return User::firstWhere('id', $this->sender_id);
+        }
+    }
+
+    public function unreadMessagesCount()
+    {
+        return Message::where('conversation_id', $this->id)
+            ->where('receiver_id', auth()->id())
+            ->whereNull('read_at')
+            ->count();
+    }
+
+    public function isLastMessageReadByUser(){
+        $user = auth()->user();
+        $lastMessage = $this->messages()->latest()->first();
+
+        if($lastMessage){
+            return $lastMessage->read_at !== null && $lastMessage->sender_id == $user->id;
         }
     }
 }

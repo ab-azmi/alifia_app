@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Chat;
 
-use Livewire\Attributes\Validate;
+use App\Models\Message;
 use Livewire\Component;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 
 class ChatBox extends Component
 {
@@ -14,6 +16,8 @@ class ChatBox extends Component
 
     public $loaded_messages;
 
+    public $paginate = 10;
+
     public function mount(){
         $this->loadMessages();
     }
@@ -21,6 +25,15 @@ class ChatBox extends Component
     public function render()
     {
         return view('livewire.chat.chat-box');
+    }
+
+    #[On('load-more')]
+    public function loadMore(){
+        $this->paginate += 10;
+        $this->loadMessages();
+
+        #update height
+        $this->dispatch('update-chat-height');
     }
 
     public function sendMessage(){
@@ -38,9 +51,42 @@ class ChatBox extends Component
 
         #push new message
         $this->loaded_messages->push($created_message);
+
+        $this->selected_conversation->updated_at = now();
+        $this->selected_conversation->save();
+
+        $this->dispatch('refresh');
     }
 
     public function loadMessages(){
-        $this->loaded_messages = $this->selected_conversation->messages()->latest()->take(10)->get()->reverse();
+        $userId = auth()->id();
+
+        #get count
+        $count = Message::where('conversation_id', $this->selected_conversation->id)
+            ->where(function ($query) use ($userId) {
+
+                $query->where('sender_id', $userId)
+                    ->whereNull('sender_deleted_at');
+            })->orWhere(function ($query) use ($userId) {
+
+                $query->where('receiver_id', $userId)
+                    ->whereNull('receiver_deleted_at');
+            })
+            ->count();
+        
+        #skip and query
+        $this->loaded_messages = Message::where('conversation_id', $this->selected_conversation->id)
+            ->where(function ($query) use ($userId) {
+
+                $query->where('sender_id', $userId)
+                    ->whereNull('sender_deleted_at');
+            })->orWhere(function ($query) use ($userId) {
+
+                $query->where('receiver_id', $userId)
+                    ->whereNull('receiver_deleted_at');
+            })
+            ->skip($count - $this->paginate)
+            ->take($this->paginate)
+            ->get();
     }
 }

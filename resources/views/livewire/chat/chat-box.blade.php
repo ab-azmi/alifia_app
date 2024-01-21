@@ -1,26 +1,16 @@
-<div class="w-full overflow-hidden"
-    x-data="{
+<div class="w-full overflow-hidden" x-data="{
         height: 0, 
         convElement: document.getElementById('conversation'
-        )}"
-    x-init="
+        )}" x-init="
         height = convElement.scrollHeight;
         $nextTick(() => {
-            convElement.scrollTo({
-                top: height,
-                behavior: 'smooth',
-            })
+            convElement.scrollTop = height;
         })
-    "
-    @scroll-bottom.window="
+    " @scroll-bottom.window="
         $nextTick(() => {
-            convElement.scrollTo({
-                top: height,
-                behavior: 'smooth',
-            })
+            convElement.scrollTop = convElement.scrollHeight;
         })
-    "
-    >
+    ">
     <div class="border-b flex flex-col overflow-y-scroll grow h-full">
 
         {{-- Header --}}
@@ -45,64 +35,96 @@
         </header>
 
         {{-- Body --}}
-        <main
-            id="conversation"
+        <main 
+        @scroll="
+            scrollTop = $el.scrollTop;
+
+            if(scrollTop <= 0){
+                $wire.dispatch('load-more');
+            }
+        "
+        @update-chat-height.window="
+            newHeight = $el.scrollHeight;
+            oldHeight = height;
+            $el.scrollTop = newHeight - oldHeight;
+            height = newHeight;
+            "
+        id="conversation"
             class="flex flex-col gap-3 p-2.5 overflow-y-auto flex-grow overscroll-contain overflow-x-hidden w-full my-auto">
-            @forelse ($loaded_messages as $msg)
-            <div @class([ 'max-w-[80%] md:max-w-[78%] flex w-auto gap-2 mt-2' , 'ml-auto'=> $msg->sender_id ===
-                auth()->id()])>
-                {{-- Avatar --}}
-                <div @class([ 'shrink-0' ])>
-                    <x-avatar />
-                </div>
+            @if($loaded_messages)
 
-                {{-- Message Body --}}
-                <div @class([ 'flex flex-wrap text-[15px] rounded-xl p-2.5 flex-col text-black bg-[#f6f6f8fb]'
-                    , 'rounded-bl-none border border-gray-200/40'=> !($msg->sender_id === auth()->id()),
-                    'rounded-br-none bg-primary/80 text-white' => $msg->sender_id === auth()->id(),
-                    ])>
-                    <p class="whitespace-normal truncate text-sm md:text-base text-white tracking-wide lg:tracking-normal">
-                        {{ $msg->body }}
-                    </p>
+                @php
+                    $previous_message = null;
+                @endphp
+                @foreach ($loaded_messages as $key => $msg)
 
-                    <div class="ml-auto flex gap-2">
-                        <p @class([ 'text-xs' , 'text-gray-500'=> !($msg->sender_id ===
-                            auth()->id()),
-                            'text-white' => $msg->sender_id ===
-                            auth()->id(),
-                            ])>
-                            {{ $msg->created_at->format('g:i a') }}
+                {{-- Keep track of previous message --}}
+
+                @if($key > 0)
+
+                    @php
+                        $previous_message = $loaded_messages[$key - 1];
+                    @endphp
+                @endif
+
+                <div @class([ 'max-w-[80%] md:max-w-[78%] flex w-auto gap-2 mt-2' , 'ml-auto'=> $msg->sender_id ===
+                    auth()->id()])>
+                    {{-- Avatar --}}
+                    <div @class([ 
+                        'shrink-0',
+                        'invisible' => $previous_message && $previous_message->sender_id === $msg->sender_id,
+                        'hidden' =>  $msg->sender_id === auth()->id(),
+                        ])>
+                        <x-avatar />
+                    </div>
+
+                    {{-- Message Body --}}
+                    <div @class([ 'flex flex-wrap text-[15px] rounded-xl p-2.5 flex-col bg-[#f6f6f8fb]'
+                        , 'rounded-bl-none border border-gray-200/40 text-black'=> !($msg->sender_id === auth()->id()),
+                        'rounded-br-none bg-primary/80 text-white' => $msg->sender_id === auth()->id(),
+                        ])>
+                        <p class="whitespace-normal truncate text-sm md:text-base tracking-wide lg:tracking-normal">
+                            {{ $msg->body }}
                         </p>
 
-                        {{-- Message Status, show if message belongs to auth --}}
-                        @if ($msg->sender_id === auth()->id())
-                        <div>
-                            @if ($msg->isRead())
-                            {{-- double tick --}}
-                            <span @class([ 'text-gray-200' ])>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="m6 17.3l-4.25-4.25q-.3-.3-.288-.7t.313-.7q.3-.275.7-.288t.7.288l3.55 3.55l1.4 1.4l-.725.7q-.3.275-.7.288T6 17.3m5.65 0L7.4 13.05q-.275-.275-.275-.687t.275-.713q.3-.3.713-.3t.712.3l3.525 3.525l8.5-8.5q.3-.3.7-.287t.7.312q.275.3.288.7t-.288.7l-9.2 9.2q-.3.3-.7.3t-.7-.3m.7-4.95l-1.425-1.4l4.25-4.25q.275-.275.688-.275t.712.275q.3.3.3.713t-.3.712z" />
-                                </svg>
-                            </span>
-                            @else
-                            {{-- single tick --}}
-                            <span @class([ 'text-gray-200' ])>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
-                                    <path fill="currentColor"
-                                        d="m9.55 15.15l8.475-8.475q.3-.3.713-.3t.712.3q.3.3.3.713t-.3.712l-9.2 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713q.3-.3.713-.3t.712.3z" />
-                                </svg>
-                            </span>
-                            @endif
-                            
-                        </div>
-                        @endif
+                        <div class="ml-auto flex gap-2">
+                            <p @class([ 'text-xs' , 'text-gray-500'=> !($msg->sender_id ===
+                                auth()->id()),
+                                'text-white' => $msg->sender_id ===
+                                auth()->id(),
+                                ])>
+                                {{ $msg->created_at->format('g:i a') }}
+                            </p>
 
+                            {{-- Message Status, show if message belongs to auth --}}
+                            @if ($msg->sender_id === auth()->id())
+                            <div>
+                                @if ($msg->isRead())
+                                {{-- double tick --}}
+                                <span @class([ 'text-gray-200' ])>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                            d="m6 17.3l-4.25-4.25q-.3-.3-.288-.7t.313-.7q.3-.275.7-.288t.7.288l3.55 3.55l1.4 1.4l-.725.7q-.3.275-.7.288T6 17.3m5.65 0L7.4 13.05q-.275-.275-.275-.687t.275-.713q.3-.3.713-.3t.712.3l3.525 3.525l8.5-8.5q.3-.3.7-.287t.7.312q.275.3.288.7t-.288.7l-9.2 9.2q-.3.3-.7.3t-.7-.3m.7-4.95l-1.425-1.4l4.25-4.25q.275-.275.688-.275t.712.275q.3.3.3.713t-.3.712z" />
+                                    </svg>
+                                </span>
+                                @else
+                                {{-- single tick --}}
+                                <span @class([ 'text-gray-200' ])>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+                                        <path fill="currentColor"
+                                            d="m9.55 15.15l8.475-8.475q.3-.3.713-.3t.712.3q.3.3.3.713t-.3.712l-9.2 9.2q-.3.3-.7.3t-.7-.3L4.55 13q-.3-.3-.288-.712t.313-.713q.3-.3.713-.3t.712.3z" />
+                                    </svg>
+                                </span>
+                                @endif
+
+                            </div>
+                            @endif
+
+                        </div>
                     </div>
                 </div>
-            </div>
-            @empty
-            @endforelse
+                @endforeach
+            @endif
 
         </main>
 
