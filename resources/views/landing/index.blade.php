@@ -244,7 +244,7 @@
             </div>
         </div>
         <div class="py-14 flex flex-col gap-14">
-            <a href="#" class="py-3 px-4 mt-2 justify-center w-fit m-auto flex gap-x-3 items-center rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-bold hover:bg-gradient-to-l transition-all">Lihat Semua Psikolog</a>
+            <a href="{{ route('landing-psikolog') }}" class="py-3 px-4 mt-2 justify-center w-fit m-auto flex gap-x-3 items-center rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-bold hover:bg-gradient-to-l transition-all">Lihat Semua Psikolog</a>
             <div class="w-[50%] m-auto h-1 bg-lightprimary"></div>
         </div>
     </div>

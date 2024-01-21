@@ -12,11 +12,11 @@
             <h1 class="text-2xl font-bold mb-10">Detail Psikolog</h1>
             <div class="md:w-fit m-auto rounded-xl shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
                 <div>
-                    <img src="{{ asset('assets/images/girl1.jpg') }}" alt="" srcset=""
+                    <img src="{{ asset('assets/images/psikolog') }}/{{ $psikolog->photo }}" alt="" srcset=""
                         class="rounded-full w-44 h-44 object-cover">
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-bold text-2xl">Lusiana M.Psi., Psikolog</h1>
+                    <h1 class="text-primary font-bold text-2xl">{{ $psikolog->name }} {{ $psikolog->degree }}, Psikolog</h1>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
@@ -24,7 +24,7 @@
                                     d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8" />
                             </svg>
                         </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">14 Sesi</h1>
+                        <h1 class="font-semibold text-slate-500 text-lg">{{ $psikolog->session }} Sesi</h1>
                     </div>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
@@ -33,7 +33,7 @@
                                     d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z" />
                             </svg>
                         </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">1 Tahun Pengalaman</h1>
+                        <h1 class="font-semibold text-slate-500 text-lg">{{ $psikolog->experience }} Tahun Pengalaman</h1>
                     </div>
 
                 </div>
@@ -42,16 +42,16 @@
         </div>
         <div class="w-full lg:w-1/2 text-center">
             <h1 class="text-2xl font-bold mb-10">Informasi Pemesanan</h1>
-            <form action="/book-test" class="w-full m-auto flex flex-col gap-y-4" method="POST">
+            <form action="{{ route('booking-store' , ['id' => $psikolog->id]) }}" class="w-full m-auto flex flex-col gap-y-4" method="POST">
                 @csrf
                 {{-- Nama --}}
                 <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                    <input type="text" placeholder="Nama" name="nama" id=""
+                    <input type="text" placeholder="Nama" name="name" id=""
                         class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
                 </div>
                 {{-- Nomor Handphone --}}
                 <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                    <input type="text" placeholder="Nomor handphone" name="no_hp" id=""
+                    <input type="text" placeholder="Nomor handphone" name="phone" id=""
                         class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
                 </div>
                 {{-- Kelamin --}}
@@ -62,9 +62,9 @@
                     
                     }, data: [
                         {id: 1, name: 'Laki-laki'},
-                        {id: 2, name: 'Perampuan'},
+                        {id: 2, name: 'Perempuan'},
                     ]}">
-                        <input type="text" class="invisible absolute" x-bind:value="selected.name" name="kelamin">
+                        <input type="text" class="invisible absolute" x-bind:value="selected.id" name="gender">
                         <button type="button" @click.prevent="isOpen = !isOpen"
                             class="relative w-full cursor-default rounded-xl bg-white py-4 pl-3 pr-10 text-left text-gray-900 border border-primary"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
@@ -111,7 +111,7 @@
                 </div>
                 {{-- Alamat --}}
                 <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                    <textarea name="alamat" id=""
+                    <textarea name="address" id=""
                         class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">Alamat    
                     </textarea>
                 </div>
@@ -125,7 +125,7 @@
                         {id: 2, name: 'Offline/Luring'},
                     ]}" class="flex flex-col gap-y-4">
                     <div class="relative mt-2">
-                        <input type="text" class="invisible absolute" x-bind:value="selected.name" name="jenis_konseling">
+                        <input type="text" class="invisible absolute" x-bind:value="selected.id" name="category">
                         <button type="button" @click.prevent="isOpen = !isOpen"
                             class="relative w-full cursor-default rounded-xl bg-white py-4 pl-3 pr-10 text-left text-gray-900 border border-primary"
                             aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
@@ -180,7 +180,7 @@
                         {{-- Tanggal --}}
                         <div
                             class="border border-primary relative rounded-xl overflow-hidden w-full ml-auto py-2 px-4 bg-white">
-                            <input type="date" placeholder="Tanggal" name="tanggal" id=""
+                            <input type="date" placeholder="Tanggal" name="date" id=""
                                 class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                         {{-- Jam --}}
                         <div x-show="selected.id === 2"
                             class="border border-primary relative rounded-xl overflow-hidden w-full ml-auto py-2 px-4 bg-white">
-                            <input type="time" placeholder="Jam" name="jam" id=""
+                            <input type="time" placeholder="Jam" name="time" id=""
                                 class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
                         </div>
                     </div>
@@ -203,8 +203,8 @@
 
                 {{-- Deskripsi Masalah --}}
                 <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                    <textarea name="deskripsi" id="" cols="30" rows="10"
-                        class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">Deskripsi Masalah    
+                    <textarea name="description" id="" cols="30" rows="10"
+                        class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">Deskripsi Masalah
                     </textarea>
                 </div>
                 {{-- Button --}}
