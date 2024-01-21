@@ -1,5 +1,16 @@
 <div 
- x-data="{type:'all'}"   
+ x-data="{type:'all', query: '{{ $query }}'}"  
+ x-init="
+    setTimeout(() => {
+        convElement = document.getElementById('conversation-'+query);
+
+        convElement.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center',
+            inline: 'center',
+        });
+    }, 200)
+ " 
 class="flex flex-col transition-all h-full overflow-hidden">
     <header class="px-3 z-10 bg-white sticky top-0 w-full py-2">
         <div class="border-b justify-between flex items-center pb-2">
@@ -29,18 +40,24 @@ class="flex flex-col transition-all h-full overflow-hidden">
         {{-- Chatlist --}}
 
         <ul class="p-2 grid w-full space-y-2">
-            <li class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700/70 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2">
+            @forelse ($conversations as $conv)
+            <li id="conversation-{{ $conv->id }}" wire:key="{{ $conv->id }}"
+            class="py-3 hover:bg-gray-50 rounded-2xl dark:hover:bg-gray-700/70 transition-colors duration-150 flex gap-4 relative w-full cursor-pointer px-2
+                {{ $conv->id ==  $selected_conversation?->id ? 'bg-gray-100/70 dark:bg-gray-700/70' : '' }}}
+            ">
                 <a href="#" class="shrink-0">
-                    <x-avatar/>
+                    <x-avatar src="https://source.unsplash.com/500x500?girl-{{ $conv->getReceiver()->id }}"/>
                 </a>
                 <aside class="grid grid-cols-12 w-full">
-                    <a href="" class="col-span-11 border-b pb-2 border-gray-200 relative overflow-hidden truncate leading-5 w-full flex-nowrap p-1">
+                    <a href="{{ route('chat', $conv->id) }}" class="col-span-11 border-b pb-2 border-gray-200 relative overflow-hidden truncate leading-5 w-full flex-nowrap p-1">
                         {{-- Name and Date --}}
                         <div class="flex justify-between w-full items-center">
-                            <h6 class="truncate font-medium tracking-wider text-gray-500">
-                                John Doe
+                            <h6 class="truncate font-medium tracking-wider text-gray-900">
+                                {{ $conv->getReceiver()->name }}
                             </h6>
-                            <small class="text-gray-700">5d</small>
+                            <small class="text-gray-700">
+                                {{ $conv->messages?->last()?->created_at?->shortAbsoluteDiffForHumans() }}
+                            </small>
                         </div>
                         {{-- Message --}}
                         <div class="flex gap-x-2 items-center">
@@ -92,6 +109,10 @@ class="flex flex-col transition-all h-full overflow-hidden">
                     </div>
                 </aside>
             </li>
+            @empty
+                
+            @endforelse
+
         </ul>
     </main>
 </div>
