@@ -23,9 +23,9 @@
     </div>
 
     {{-- Search bar --}}
-    <form action="" class="my-10 lg:my-0">
+    <form action="{{ route('landing-psikolog') }}" method="GET" class="my-10 lg:my-0">
         <div class="border border-primary relative mb-11 rounded-xl overflow-hidden w-[70%] m-auto py-2 px-4 bg-white">
-            <input type="text" placeholder="Cari psikolog" name="" id="" class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
+            <input type="text" placeholder="Cari psikolog" name="search" id="" class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
             <div class="absolute top-3 right-5 text-primary">
                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none"><path d="M0 0h24v24H0z"/><path fill="currentColor" d="M10.5 2a8.5 8.5 0 0 1 6.676 13.762l3.652 3.652a1 1 0 0 1-1.414 1.414l-3.652-3.652A8.5 8.5 0 1 1 10.5 2m0 2a6.5 6.5 0 1 0 0 13a6.5 6.5 0 0 0 0-13m0 1a5.5 5.5 0 1 1 0 11a5.5 5.5 0 0 1 0-11"/></g></svg>
             </div>
@@ -40,32 +40,44 @@
 
     {{-- Psikolog --}}
     <div class="flex lg:flex-row flex-col flex-wrap items-center lg:items-stretch justify-center gap-7 mt-14">
+        @foreach($psikolog as $item)
         <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
             <div>
-                <img src="{{ asset('assets/images/girl1.jpg') }}" alt="" srcset="" class="rounded-full w-44 h-44 object-cover">
+                <img src="{{ asset('assets/images/psikolog') }}/{{ $item->photo }}" alt="" srcset="" class="rounded-full w-44 h-44 object-cover">
             </div>
             <div class="flex flex-col gap-5 w-full text-center px-6">
-                <h1 class="text-primary font-bold text-2xl">Marshela M.Psi., Psikolog</h1>
+                <h1 class="text-primary font-bold text-2xl">{{ $item->name }} {{ $item->degree }}, Psikolog</h1>
                 <div class="flex gap-3">
                     <div class="text-icongreen">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8"/></svg>
                     </div>
-                    <h1 class="font-semibold text-slate-500 text-lg">14 Sesi</h1>
+                    <h1 class="font-semibold text-slate-500 text-lg">{{ $item->session }} sesi</h1>
                 </div>
                 <div class="flex gap-3">
                     <div class="text-icongreen">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="currentColor" d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z"/></svg>
                     </div>
-                    <h1 class="font-semibold text-slate-500 text-lg">1 Tahun Pengalaman</h1>
+                    <h1 class="font-semibold text-slate-500 text-lg">{{ $item->experience }} Tahun Pengalaman</h1>
                 </div>
                
             </div>
             <div class="flex gap-4 w-full mt-6">
-                <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">Ada</div>
-                <a href="#" class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
+                @if($item->status == 0)
+                    <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-slate-700 text-white font-bold hover:bg-gradient-to-l transition-all">Sibuk</div>
+                @else
+                    <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">Ada</div>
+                @endif
+
+                <a href="{{ $item->status == 0 ? 'javascript:void(0)' : route('booking', $item->id) }}" 
+                    class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center 
+                    rounded-lg {{ $item->status == 0 ? 'bg-slate-700' : 'bg-icongreen' }} text-white 
+                    font-bold hover:bg-gradient-to-l transition-all">
+                    Booking
+                </a>
             </div>
         </div>
-        <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
+        @endforeach
+        {{-- <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
             <div>
                 <img src="{{ asset('assets/images/ethan.png') }}" alt="" srcset="" class="rounded-full w-44 h-44 object-cover">
             </div>
@@ -189,7 +201,7 @@
                 <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">Ada</div>
                 <a href="#" class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="py-20 flex flex-col gap-14">
