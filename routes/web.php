@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Chat\Chat;
+use App\Livewire\Chat\Index;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -53,5 +55,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+Route::get('/chat', Index::class)->middleware(['auth', 'verified'])->name('chat.index');
+
+Route::get('/chat/{query}',  Chat::class)->middleware(['auth', 'verified'])->name('chat');
 
 require __DIR__.'/auth.php';
