@@ -6,6 +6,8 @@ use App\Models\Message;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
+use App\Notifications\MessageRead;
+use App\Notifications\MessageSent;
 
 class ChatBox extends Component
 {
@@ -27,7 +29,15 @@ class ChatBox extends Component
         return view('livewire.chat.chat-box');
     }
 
-    #[On('load-more')]
+    public function getListeners(){
+        $auth_id = auth()->id();
+
+        return [
+            'load_more' => 'loadMore',
+            "echo-private:users.{$auth_id},.Illuminate\\Notifications\\Events\\BroadcastNotificationCreated" => 'broadcastedNotifications',
+        ];
+    }
+
     public function loadMore(){
         $this->paginate += 10;
         $this->loadMessages();
@@ -56,6 +66,13 @@ class ChatBox extends Component
         $this->selected_conversation->save();
 
         $this->dispatch('refresh');
+
+        $this->selected_conversation->getReceiver()->notify(new MessageSent(
+            auth()->user(),
+            $created_message,
+            $this->selected_conversation,
+            $this->selected_conversation->getReceiver()->id
+        ));
     }
 
     public function loadMessages(){
@@ -88,5 +105,27 @@ class ChatBox extends Component
             ->skip($count - $this->paginate)
             ->take($this->paginate)
             ->get();
+    }
+
+    public function broadcastedNotifications($event){
+        if($event['type'] == MessageSent::class){
+            if($event['conversation_id'] == $this->selected_conversation->id){
+                $new_message = Message::find($event['message_id']);
+                #push new message
+                $this->loaded_messages->push($new_message);
+                #scroll to bittim
+                $this->dispatch('scroll-bottom');
+
+                #mark as read
+                $new_message->update([
+                    'read_at' => now()
+                ]);
+
+                #broadcast read
+                $this->selected_conversation->getReceiver()->notify(new MessageRead(
+                    $this->selected_conversation->id
+                ));
+            }
+        }
     }
 }

@@ -41,4 +41,22 @@ class Conversation extends Model
             return $lastMessage->read_at !== null && $lastMessage->sender_id == $user->id;
         }
     }
+
+    public function scopeWhereNotDeleted($query){
+        $user_id = auth()->id();
+
+        return $query->where(function($query) use ($user_id){
+           //Where message is not deleted
+           $query->whereHas('messages', function($query) use ($user_id){
+              $query->where(function($query) use ($user_id){
+                $query->where('sender_id', $user_id)
+                    ->whereNull('sender_deleted_at');
+              })->orWhere(function($query) use ($user_id){
+                $query->where('receiver_id', $user_id)
+                    ->whereNull('receiver_deleted_at');
+              });
+           })
+           ->orWhereDoesntHave('messages');
+        });
+    }
 }
