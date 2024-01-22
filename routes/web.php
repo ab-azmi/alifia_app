@@ -44,9 +44,6 @@ Route::get('/landing-psikolog', [PsikologController::class, 'index'])->name('lan
 
 Route::get('/landing-riwayat', [KonselingController::class, 'index'])->name('landing-riwayat');
 
-Route::get('/booking/{id}', [KonselingController::class, 'create'])->name('booking');
-Route::post('/booking-store/{id}', [KonselingController::class, 'store'])->name('booking-store');
-
 // Route::post('/book-test', function(Request $request) {
 //     dd($request->all());
 // })->name('book-test');
@@ -63,6 +60,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/chat', Index::class)->name('chat.index');
     Route::get('/chat/{query}',  Chat::class)->name('chat');
     Route::get('/users',  Users::class)->name('users');
+
+    Route::get('/booking/{id}', [KonselingController::class, 'create'])->name('booking');
+    Route::post('/booking-store/{id}', [KonselingController::class, 'store'])->name('booking-store');
 });
 
 
