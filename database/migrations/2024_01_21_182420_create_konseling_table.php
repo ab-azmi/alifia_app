@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('category'); // 1 for Online, 2 for Offline
             $table->date('date')->nullable();
             $table->time('time')->nullable();
+            $table->boolean('berlangsung')->default(true);
             $table->string('description');
             $table->timestamps();
         });

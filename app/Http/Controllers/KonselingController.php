@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Konseling;
 use App\Models\Psikolog;
+use Illuminate\Support\Facades\Auth;
 
 class KonselingController extends Controller
 {
     public function index(){
-        $konseling = Konseling::latest()->get();
-
-        return view('landing.riwayat', compact('konseling'));
+        // kupindah ke livewire.landing.riwayat
     }
     public function create($id)
     {

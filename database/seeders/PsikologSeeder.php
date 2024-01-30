@@ -23,7 +23,7 @@ class PsikologSeeder extends Seeder
             'photo' => 'marshela.png',
             'user_id' => User::factory()->create([
                 'name' => 'Marshela',
-            ])->id,
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Ghanny',
@@ -34,7 +34,7 @@ class PsikologSeeder extends Seeder
             'photo' => 'ghanny.png',
             'user_id' => User::factory()->create([
                 'name' => 'Ghanny',
-            ])->id,
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Kirana',
@@ -45,7 +45,7 @@ class PsikologSeeder extends Seeder
             'photo' => 'kirana.png',
             'user_id' => User::factory()->create([
                 'name' => 'Kirana',
-            ])->id,
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Kevin',
@@ -56,7 +56,7 @@ class PsikologSeeder extends Seeder
             'photo' => 'kevin.png',
             'user_id' => User::factory()->create([
                 'name' => 'Kevin',
-            ])->id,
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Fakhri',
@@ -67,7 +67,7 @@ class PsikologSeeder extends Seeder
             'photo' => 'fakhri.png',
             'user_id' => User::factory()->create([
                 'name' => 'Fakhri',
-            ])->id,
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Bella',
@@ -78,7 +78,7 @@ class PsikologSeeder extends Seeder
             'photo' => 'bella.png',
             'user_id' => User::factory()->create([
                 'name' => 'Bella',
-            ])->id,
+            ])->assignRole('psikolog')->id,
         ]);
     }
 }
