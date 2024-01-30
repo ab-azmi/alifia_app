@@ -20,7 +20,9 @@
 <body class="font-axiforma text-gray-900 antialiased h-full">
 
     <div class="w-full overflow-hidden">
+        <x-top-bar/>
         {{ $slot }}
+        <x-footer/>
     </div>
 
     @livewireScripts

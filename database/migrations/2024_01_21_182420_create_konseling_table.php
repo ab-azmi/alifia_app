@@ -13,13 +13,20 @@ return new class extends Migration
     {
         Schema::create('konseling', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('psikolog_id');
+
+            $table->unsignedBigInteger('psikolog_id');
+            $table->foreign('psikolog_id')->references('id')->on('users');
+            
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('users');
+
             $table->string('phone');
             $table->integer('gender'); // 1 for Male, 2 for Female
             $table->string('address');
             $table->integer('category'); // 1 for Online, 2 for Offline
             $table->date('date')->nullable();
             $table->time('time')->nullable();
+            $table->boolean('berlangsung')->default(true);
             $table->string('description');
             $table->timestamps();
         });

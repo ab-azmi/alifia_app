@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Psikolog;
+use App\Models\User;
 
 class PsikologSeeder extends Seeder
 {
@@ -19,7 +20,10 @@ class PsikologSeeder extends Seeder
             'session' => 22,
             'experience' => 2,
             'status' => 1,
-            'photo' => 'marshela.png'
+            'photo' => 'marshela.png',
+            'user_id' => User::factory()->create([
+                'name' => 'Marshela',
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Ghanny',
@@ -27,7 +31,10 @@ class PsikologSeeder extends Seeder
             'session' => 30,
             'experience' => 3,
             'status' => 0,
-            'photo' => 'ghanny.png'
+            'photo' => 'ghanny.png',
+            'user_id' => User::factory()->create([
+                'name' => 'Ghanny',
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Kirana',
@@ -35,7 +42,10 @@ class PsikologSeeder extends Seeder
             'session' => 42,
             'experience' => 4,
             'status' => 1,
-            'photo' => 'kirana.png'
+            'photo' => 'kirana.png',
+            'user_id' => User::factory()->create([
+                'name' => 'Kirana',
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Kevin',
@@ -43,7 +53,10 @@ class PsikologSeeder extends Seeder
             'session' => 45,
             'experience' => 2,
             'status' => 0,
-            'photo' => 'kevin.png'
+            'photo' => 'kevin.png',
+            'user_id' => User::factory()->create([
+                'name' => 'Kevin',
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Fakhri',
@@ -51,7 +64,10 @@ class PsikologSeeder extends Seeder
             'session' => 25,
             'experience' => 3,
             'status' => 1,
-            'photo' => 'fakhri.png'
+            'photo' => 'fakhri.png',
+            'user_id' => User::factory()->create([
+                'name' => 'Fakhri',
+            ])->assignRole('psikolog')->id,
         ]);
         Psikolog::create([
             'name' => 'Bella',
@@ -59,7 +75,10 @@ class PsikologSeeder extends Seeder
             'session' => 50,
             'experience' => 3,
             'status' => 1,
-            'photo' => 'bella.png'
+            'photo' => 'bella.png',
+            'user_id' => User::factory()->create([
+                'name' => 'Bella',
+            ])->assignRole('psikolog')->id,
         ]);
     }
 }

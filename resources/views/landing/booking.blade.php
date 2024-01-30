@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-top-bar />
+    
     <div class="w-fit m-auto text-center flex flex-col gap-4 my-10">
         <h1
             class="font-bold tracking-widest text-primary text-2xl before:content-['Boo'] before:bg-lightprimary before:pl-10 before:py-1">king Psikolog
@@ -215,5 +215,5 @@
             </form>
         </div>
     </div>
-    <x-footer />
+    
 </x-guest-layout>
