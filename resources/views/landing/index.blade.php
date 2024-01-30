@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <x-top-bar/>
+    
 
     {{-- Hero Section --}}
     <div class="flex lg:flex-row flex-col gap-8 lg:gap-4 px-4 lg:px-32 m-auto py-5 md:py-10 lg:py-24 justify-between">
@@ -249,6 +249,6 @@
         </div>
     </div>
 
-    <x-footer/>
+    
     
 </x-guest-layout>

@@ -1,5 +1,4 @@
 <x-guest-layout>
-    <x-top-bar/>
     
     {{-- Banner --}}
     <div class="flex lg:flex-row flex-col justify-between relative  m-auto lg:w-[80%] lg:h-[28rem] bg-gradient-to-r from-secondary/50 to-primary md:rounded-xl lg:my-10">
@@ -209,5 +208,4 @@
         <div class="w-[50%] m-auto h-1 bg-lightprimary"></div>
     </div>
 
-    <x-footer/>
 </x-guest-layout>

@@ -1,5 +1,4 @@
 <x-guest-layout>
-    <x-top-bar />
     {{-- <div class="w-full h-screen flex items-center justify-center">
         <div class="w-fit text-center">
             <img src="{{ asset('assets/images/empty.svg') }}" alt="">
@@ -88,5 +87,4 @@
         </tbody>
     </table>
 
-    <x-footer />
 </x-guest-layout>
