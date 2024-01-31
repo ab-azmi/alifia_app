@@ -8,12 +8,18 @@ use App\Models\Conversation;
 
 class Riwayat extends Component
 {
+    public $konseling = [];
+
     public function render()
     {
         //get active konseling
-        $konseling = auth()->user()->konseling()->with('psikolog.dataPsikolog')->get();
 
-        return view('livewire.landing.riwayat', compact('konseling'));
+       //check if user is authenticated
+         if(auth()->check()){
+            $this->konseling = auth()->user()->konseling()->with('psikolog.dataPsikolog')->get();
+        }
+
+        return view('livewire.landing.riwayat');
     }
 
     public function goToMessage($user_id)

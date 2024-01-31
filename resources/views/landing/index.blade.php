@@ -60,7 +60,7 @@
                         </div>
                         <h1 class="font-semibold text-slate-500">{{ $item->psikolog->dataPsikolog->experience }} Tahun Pengalaman</h1>
                     </div>
-                    <a href="#"
+                    <a href="{{ route('landing-riwayat') }}"
                         class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-bold hover:bg-gradient-to-l transition-all">Kembali</a>
                 </div>
             </div>
