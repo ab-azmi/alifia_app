@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PsikologController;
 use App\Http\Controllers\KonselingController;
 use App\Http\Controllers\LandingController;
+use App\Livewire\Landing\Psikolog;
 use App\Livewire\Landing\Riwayat;
 
 /*
@@ -25,7 +26,7 @@ use App\Livewire\Landing\Riwayat;
 Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 
-Route::get('/landing-psikolog', [PsikologController::class, 'index'])->name('landing-psikolog');
+Route::get('/landing-psikolog', Psikolog::class)->name('landing-psikolog');
 
 Route::get('/landing-riwayat', Riwayat::class)->name('landing-riwayat');
 
