@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\KonselingRequest;
 use Illuminate\Http\Request;
 use App\Models\Konseling;
 use App\Models\Psikolog;
@@ -18,19 +19,10 @@ class KonselingController extends Controller
 
         return view('landing.booking', compact('psikolog'));
     }
-    public function store(Request $request, $id)
+    public function store(KonselingRequest $request, $id)
     {
-        $validatedData = $request->validate([
-            'phone' => 'required',
-            'gender' => 'required',
-            'address' => 'required',
-            'category' => 'required',
-            'date' => 'nullable',
-            'time' => 'nullable',
-            'description' => 'required',
-        ]);
-
-        $validatedData['psikolog_id'] = $id;
+        $validatedData = $request->validated();
+        $validatedData['client_id'] = auth()->id();
 
         $psikolog = Psikolog::findOrFail($id);
         $konseling = $psikolog->konseling()->create($validatedData);
