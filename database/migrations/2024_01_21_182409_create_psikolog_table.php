@@ -19,6 +19,9 @@ return new class extends Migration
             $table->bigInteger('session');
             $table->bigInteger('experience');
             $table->integer('status'); // 0 for Sibuk, 1 for Ada
+            $table->time('start')->nullable();
+            $table->time('end')->nullable();
+            $table->string('workdays')->nullable();
             $table->string('photo');
             $table->timestamps();
         });

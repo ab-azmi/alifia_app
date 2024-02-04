@@ -21,6 +21,9 @@ class PsikologSeeder extends Seeder
             'experience' => 2,
             'status' => 1,
             'photo' => 'marshela.png',
+            'start' => '08:00:00',
+            'end' => '16:00:00',
+            'workdays' => 'Senin, Selasa, Rabu, Kamis, Jumat',
             'user_id' => User::factory()->create([
                 'name' => 'Marshela',
             ])->assignRole('psikolog')->id,
@@ -32,6 +35,9 @@ class PsikologSeeder extends Seeder
             'experience' => 3,
             'status' => 0,
             'photo' => 'ghanny.png',
+            'start' => '08:00:00',
+            'end' => '16:00:00',
+            'workdays' => 'Senin, Selasa, Rabu, Kamis, Jumat',
             'user_id' => User::factory()->create([
                 'name' => 'Ghanny',
             ])->assignRole('psikolog')->id,
@@ -43,6 +49,9 @@ class PsikologSeeder extends Seeder
             'experience' => 4,
             'status' => 1,
             'photo' => 'kirana.png',
+            'start' => '08:00:00',
+            'end' => '16:00:00',
+            'workdays' => 'Senin, Selasa, Rabu, Kamis, Jumat',
             'user_id' => User::factory()->create([
                 'name' => 'Kirana',
             ])->assignRole('psikolog')->id,
@@ -54,6 +63,9 @@ class PsikologSeeder extends Seeder
             'experience' => 2,
             'status' => 0,
             'photo' => 'kevin.png',
+            'start' => '08:00:00',
+            'end' => '16:00:00',
+            'workdays' => 'Senin, Selasa, Rabu, Kamis, Jumat',
             'user_id' => User::factory()->create([
                 'name' => 'Kevin',
             ])->assignRole('psikolog')->id,
@@ -65,6 +77,9 @@ class PsikologSeeder extends Seeder
             'experience' => 3,
             'status' => 1,
             'photo' => 'fakhri.png',
+            'start' => '08:00:00',
+            'end' => '16:00:00',
+            'workdays' => 'Senin, Selasa, Rabu, Kamis, Jumat',
             'user_id' => User::factory()->create([
                 'name' => 'Fakhri',
             ])->assignRole('psikolog')->id,
@@ -76,6 +91,9 @@ class PsikologSeeder extends Seeder
             'experience' => 3,
             'status' => 1,
             'photo' => 'bella.png',
+            'start' => '08:00:00',
+            'end' => '16:00:00',
+            'workdays' => 'Senin, Selasa, Rabu, Kamis, Jumat',
             'user_id' => User::factory()->create([
                 'name' => 'Bella',
             ])->assignRole('psikolog')->id,

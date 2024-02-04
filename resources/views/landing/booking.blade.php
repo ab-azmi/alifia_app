@@ -1,8 +1,9 @@
 <x-guest-layout>
-    
+
     <div class="w-fit m-auto text-center flex flex-col gap-4 my-10">
         <h1
-            class="font-bold tracking-widest text-primary text-2xl before:content-['Boo'] before:bg-lightprimary before:pl-10 before:py-1">king Psikolog
+            class="font-bold tracking-widest text-primary text-2xl before:content-['Boo'] before:bg-lightprimary before:pl-10 before:py-1">
+            king Psikolog
         </h1>
         <h1 class="text-4xl font-bold text-display">Lakukan Pemesanan Layanan</h1>
     </div>
@@ -11,12 +12,19 @@
         <div class="w-full lg:w-1/2 text-center">
             <h1 class="text-2xl font-bold mb-10">Detail Psikolog</h1>
             <div class="md:w-fit m-auto rounded-xl shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
-                <div>
+                <div class="relative">
                     <img src="{{ asset('assets/images/psikolog') }}/{{ $psikolog->photo }}" alt="" srcset=""
                         class="rounded-full w-44 h-44 object-cover">
+                    <div
+                        class="px-2 py-1 w-fit rounded-lg bg-icongreen absolute bottom-0 left-1/2 transform -translate-x-1/2">
+                        <h1 class="font-semibold text-white text-sm text-nowrap">{{
+                            \Carbon\Carbon::parse($psikolog->start)->format('H:i') }} - {{
+                            \Carbon\Carbon::parse($psikolog->end)->format('H:i') }}</h1>
+                    </div>
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-bold text-2xl">{{ $psikolog->name }} {{ $psikolog->degree }}, Psikolog</h1>
+                    <h1 class="text-primary font-bold text-2xl">{{ $psikolog->name }} {{ $psikolog->degree }}, Psikolog
+                    </h1>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
@@ -33,20 +41,34 @@
                                     d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z" />
                             </svg>
                         </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">{{ $psikolog->experience }} Tahun Pengalaman</h1>
+                        <h1 class="font-semibold text-slate-500 text-lg">{{ $psikolog->experience }} Tahun Pengalaman
+                        </h1>
                     </div>
-
+                    <div class="flex gap-3">
+                        <div class="text-icongreen">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+                                <g fill="none" fill-rule="evenodd">
+                                    <path
+                                        d="M24 0v24H0V0zM12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036c-.01-.003-.019 0-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z" />
+                                    <path fill="currentColor"
+                                        d="M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1M8 7H5v2h14V7h-3zm-3 4v8h14v-8zm2 2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H8a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2zm3-2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H12a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2zm3-2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H16a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2z" />
+                                </g>
+                            </svg>
+                        </div>
+                        <h1 class="font-semibold text-slate-500 text-lg">{{ $psikolog->workdays }}</h1>
+                    </div>
                 </div>
 
             </div>
         </div>
         <div class="w-full lg:w-1/2 text-center">
             <h1 class="text-2xl font-bold mb-10">Informasi Pemesanan</h1>
-            <form action="{{ route('booking-store' , ['id' => $psikolog->id]) }}" class="w-full m-auto flex flex-col gap-y-4" method="POST">
+            <form action="{{ route('booking-store' , ['id' => $psikolog->id]) }}"
+                class="w-full m-auto flex flex-col gap-y-4" method="POST">
                 @csrf
                 {{-- Nama --}}
                 <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                    <input type="text" placeholder="Nama" name="name" id=""
+                    <input type="text" placeholder="Nama" name="name" id="" value="{{ Auth::user()->name ?? '' }}"
                         class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
                 </div>
                 {{-- Nomor Handphone --}}
@@ -215,5 +237,5 @@
             </form>
         </div>
     </div>
-    
+
 </x-guest-layout>
