@@ -31,7 +31,7 @@
         @auth
         @if ($konselings->isNotEmpty())
         @foreach ($konselings as $item)
-        <div class="max-w-md shadow-lg rounded-lg overflow-hidden relative">
+        <div class="max-w-md shadow-lg rounded-lg overflow-hidden relative min-h-60">
             @if ($item->category == 1)
             <span class="bg-yellow-500 px-2 py-1 rounded absolute left-0 bottom-0 text-white">Daring</span>
             @else
@@ -40,19 +40,28 @@
             <div class="bg-primary py-3 px-4 text-center">
                 <h1 class="text-white font-black text-xl">Konsultasi Berlangsung</h1>
             </div>
-            <div class="flex md:flex-row flex-col items-center bg-white px-6 py-6 gap-7">
+            <div class="flex md:flex-row flex-col items-center md:items-start h-full bg-white px-6 py-6 gap-7">
                 <div class="relative min-w-fit">
                     <img src="{{ asset('assets/images/girl.jpg') }}" alt="" srcset=""
                         class="rounded-full w-32 h-32 object-cover">
+                    @role('client')
                     <div
                         class="px-2 py-1 w-fit rounded-lg bg-icongreen absolute bottom-0 left-1/2 transform -translate-x-1/2">
                         <h1 class=" text-white text-xs text-nowrap">{{
                             \Carbon\Carbon::parse($item->psikolog->dataPsikolog->start)->format('H:i') }} - {{
                             \Carbon\Carbon::parse($item->psikolog->dataPsikolog->end)->format('H:i') }}</h1>
                     </div>
+                    @endrole
                 </div>
                 <div class="flex flex-col gap-2">
-                    <h1 class="text-primary font-bold text-xl">{{ $item->psikolog->dataPsikolog->name }}, Psikolog</h1>
+                    @role('client')
+                    <h1 class="text-primary font-bold text-xl">{{ $item->psikolog->dataPsikolog->name.' '.$item->psikolog->dataPsikolog->degree }}</h1>
+                    @endrole
+                    @role('psikolog')
+                    <h1 class="text-primary font-bold text-xl">{{ $item->client->name }}</h1>
+                    @endrole
+
+                    @role('client')
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
@@ -85,6 +94,8 @@
                         </div>
                         <h1 class="font-semibold text-slate-500">{{ $item->psikolog->dataPsikolog->workdays }}</h1>
                     </div>
+                    @endrole
+
                     <a href="{{ route('landing-riwayat') }}"
                         class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-gradient-to-r from-primary to-secondary text-white font-bold hover:bg-gradient-to-l transition-all">Kembali</a>
                 </div>

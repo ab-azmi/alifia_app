@@ -52,9 +52,15 @@ class Riwayat extends Component
         //check if user is authenticated
         if (auth()->check()) {
             $this->konseling = [];
-            $this->konseling = auth()->user()->konselingAsClient()
-                
+
+            if(auth()->user()->hasRole('psikolog')){
+                $this->konseling = auth()->user()->konselingAsPsikolog()
+                ->with('client')->where('category', 1)->get();
+            }
+            else{
+                $this->konseling = auth()->user()->konselingAsClient()
                 ->with('psikolog.dataPsikolog')->where('category', 1)->get();
+            }
         }
     }
 
@@ -64,8 +70,14 @@ class Riwayat extends Component
         //check if user is authenticated
         if (auth()->check()) {
             $this->konseling = [];
-            $this->konseling = auth()->user()->konselingAsClient()
+            if(auth()->user()->hasRole('psikolog')){
+                $this->konseling = auth()->user()->konselingAsPsikolog()
+                ->with('client')->where('category', 2)->get();
+            }
+            else{
+                $this->konseling = auth()->user()->konselingAsClient()
                 ->with('psikolog.dataPsikolog')->where('category', 2)->get();
+            }
         }
     }
 }

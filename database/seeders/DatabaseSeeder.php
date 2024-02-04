@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoleSeeder::class);
 
         User::factory()->create([
-            'name' => 'Admin',
+            'name' => 'Amanda Minerva',
             'email' => 'admin@gmail.com',
         ])->assignRole('client');
 
