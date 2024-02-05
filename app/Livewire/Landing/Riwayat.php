@@ -5,10 +5,13 @@ namespace App\Livewire\Landing;
 use App\Livewire\Users;
 use Livewire\Component;
 use App\Models\Conversation;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class Riwayat extends Component
 {
     public $konseling = [];
+    public $category = 1;
+    public $note = '';
 
     public function render()
     {
@@ -48,36 +51,48 @@ class Riwayat extends Component
     }
 
     public function getKonselingOnline()
-{
-        //check if user is authenticated
-        if (auth()->check()) {
-            $this->konseling = [];
-
-            if(auth()->user()->hasRole('psikolog')){
-                $this->konseling = auth()->user()->konselingAsPsikolog()
-                ->with('client')->where('category', 1)->get();
-            }
-            else{
-                $this->konseling = auth()->user()->konselingAsClient()
-                ->with('psikolog.dataPsikolog')->where('category', 1)->get();
-            }
-        }
+    {
+        $this->category = 1;
+        $this->getKonseling();    
     }
 
     public function getKonselingOffline()
     {
-        
+        $this->category = 2;
+        $this->getKonseling();   
+    }
+
+    public function getKonseling()
+    {
         //check if user is authenticated
         if (auth()->check()) {
             $this->konseling = [];
+
             if(auth()->user()->hasRole('psikolog')){
                 $this->konseling = auth()->user()->konselingAsPsikolog()
-                ->with('client')->where('category', 2)->get();
+                ->with('client')->where('category', $this->category)->get();
             }
             else{
                 $this->konseling = auth()->user()->konselingAsClient()
-                ->with('psikolog.dataPsikolog')->where('category', 2)->get();
+                ->with('psikolog.dataPsikolog')->where('category', $this->category)->get();
             }
         }
+    }
+
+    public function selesaiKonseling($id){
+        //get konseling as psikolog
+        $konseling = auth()->user()->konselingAsPsikolog()->find($id);
+        
+        //update status konseling
+        $konseling->update([
+            'berlangsung' => 2,
+            'note' => $this->note
+        ]);
+
+        //refresh konseling
+        $this->getKonseling();
+
+        //reset note
+        $this->note = '';
     }
 }

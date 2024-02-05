@@ -113,8 +113,7 @@
         </div>
         <div class="w-fit font-axiforma m-auto text-center flex flex-col gap-4">
             <h1
-                class="font-bold tracking-widest text-primary text-2xl before:content-['Ten'] before:bg-lightprimary before:pl-10 before:py-1">
-                tang Kami</h1>
+                class="font-bold tracking-widest text-primary text-2xl before:content-['Ten'] before:bg-lightprimary before:pl-10 before:py-1">tang Kami</h1>
             <h1 class="text-4xl font-bold text-display">Kemudahan Dalam Layanan Kami</h1>
         </div>
         <div class="flex gap-12 lg:flex-row flex-col items-center">
@@ -168,8 +167,7 @@
     <div id="konseling" class="py-20 px-16 flex flex-col gap-y-20">
         <div class="w-fit font-axiforma m-auto text-center flex flex-col gap-4">
             <h1
-                class="font-bold tracking-widest text-primary text-2xl before:content-['Laya'] before:bg-lightprimary before:pl-10 before:py-1">
-                nan Konseling
+                class="font-bold tracking-widest text-primary text-2xl before:content-['Laya'] before:bg-lightprimary before:pl-10 before:py-1">nan Konseling
             </h1>
             <h1 class="text-4xl font-bold text-display">Layanan Utama Kami Untuk Anda</h1>
         </div>
@@ -214,8 +212,7 @@
     <div class="bg-white w-full px-16 pt-20">
         <div class="w-fit m-auto text-center flex flex-col gap-4">
             <h1
-                class="font-bold tracking-widest text-primary text-2xl before:content-['C'] before:bg-lightprimary before:pl-10 before:py-1">
-                ari Psikolog
+                class="font-bold tracking-widest text-primary text-2xl before:content-['C'] before:bg-lightprimary before:pl-10 before:py-1">ari Psikolog
             </h1>
             <h1 class="text-4xl font-bold text-display">Rekomendasi Psikolog</h1>
         </div>
