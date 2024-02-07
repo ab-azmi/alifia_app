@@ -11,16 +11,12 @@
     <div class="flex px-4 md:px-20 gap-10 lg:gap-0 my-20 lg:flex-row flex-col">
         <div class="w-full lg:w-1/2 text-center">
             <h1 class="text-2xl font-bold mb-10">Detail Psikolog</h1>
-            <div class="md:w-[70%] m-auto rounded-xl shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
+            <div
+                class="md:w-[70%] m-auto rounded-xl shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center mb-5">
                 <div class="relative">
                     <img src="{{ asset('assets/images/psikolog') }}/{{ $psikolog->photo }}" alt="" srcset=""
                         class="rounded-full w-44 h-44 object-cover">
-                    <div
-                        class="px-2 py-1 w-fit rounded-lg bg-icongreen absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                        <h1 class="font-semibold text-white text-sm text-nowrap">{{
-                            \Carbon\Carbon::parse($psikolog->start)->format('H:i') }} - {{
-                            \Carbon\Carbon::parse($psikolog->end)->format('H:i') }}</h1>
-                    </div>
+
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
                     <h1 class="text-primary font-bold text-2xl">{{ $psikolog->name }} {{ $psikolog->degree }}, Psikolog
@@ -41,27 +37,50 @@
                                     d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z" />
                             </svg>
                         </div>
-                        <h1 class="font-semibold text-slate-500 text-lg text-start">{{ $psikolog->experience }} Tahun Pengalaman
+                        <h1 class="font-semibold text-slate-500 text-lg text-start">{{ $psikolog->experience }} Tahun
+                            Pengalaman
                         </h1>
                     </div>
-                    <div class="flex gap-3">
-                        <div class="text-icongreen">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                <g fill="none" fill-rule="evenodd">
-                                    <path
-                                        d="M24 0v24H0V0zM12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036c-.01-.003-.019 0-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z" />
-                                    <path fill="currentColor"
-                                        d="M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1M8 7H5v2h14V7h-3zm-3 4v8h14v-8zm2 2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H8a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2zm3-2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H12a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2zm3-2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H16a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2z" />
-                                </g>
-                            </svg>
-                        </div>
-                        <div class="text-start text-wrap">
-                            <h1 class="font-semibold text-slate-500 text-lg">{{ $psikolog->workdays }}</h1>
-                        </div>
-                    </div>
+
                 </div>
 
             </div>
+            <h1 class="text-base font-semibold mb-5">Jadwal Praktik Offline</h1>
+            <div
+                class="md:w-[70%] m-auto rounded-xl shadow-lg bg-white px-8 py-4 flex gap-3 justify-center items-center mt-3">
+                <div class="text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                        <g fill="none">
+                            <path
+                                d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                            <path fill="currentColor"
+                                d="M12 2a9 9 0 0 1 9 9c0 3.074-1.676 5.59-3.442 7.395a20.441 20.441 0 0 1-2.876 2.416l-.426.29l-.2.133l-.377.24l-.336.205l-.416.242a1.874 1.874 0 0 1-1.854 0l-.416-.242l-.52-.32l-.192-.125l-.41-.273a20.638 20.638 0 0 1-3.093-2.566C4.676 16.589 3 14.074 3 11a9 9 0 0 1 9-9m0 6a3 3 0 1 0 0 6a3 3 0 0 0 0-6" />
+                        </g>
+                    </svg>
+                </div>
+                <h1>
+                    {{ $psikolog->location }}
+                </h1>
+            </div>
+            @foreach ($psikolog->praktik as $praktik)
+            <div
+                class="md:w-[70%] m-auto rounded-r-lg border-l-4 shadow-lg border-icongreen bg-white px-8 py-4 flex flex-col gap-2  mt-3">
+                <div class="text-start text-slate-400 text-sm">
+                    Jadwal Praktik
+                </div>
+                <div class="flex gap-4">
+                    <div class="text-icongreen">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M17.5 3a3.5 3.5 0 0 1 2.526 5.923A8.962 8.962 0 0 1 21 13a8.973 8.973 0 0 1-2.714 6.44l-.222.21l.643.643a1 1 0 0 1-1.32 1.497l-.094-.083l-.868-.868A8.96 8.96 0 0 1 12 22a8.962 8.962 0 0 1-4.12-.996l-.305-.165l-.868.868a1 1 0 0 1-1.497-1.32l.083-.094l.643-.643A8.977 8.977 0 0 1 3 13a8.96 8.96 0 0 1 .974-4.077A3.5 3.5 0 1 1 9.307 4.41A8.996 8.996 0 0 1 12 4c.938 0 1.842.143 2.693.41A3.494 3.494 0 0 1 17.5 3M12 6a7 7 0 1 0 0 14a7 7 0 0 0 0-14m0 2a1 1 0 0 1 1 1v3.586l1.813 1.812a1 1 0 0 1-1.415 1.415l-2.105-2.106a.997.997 0 0 1-.293-.72V9a1 1 0 0 1 1-1M6.5 5a1.5 1.5 0 0 0-1.348 2.16a9.044 9.044 0 0 1 2.22-1.88A1.494 1.494 0 0 0 6.5 5m11 0c-.325 0-.626.103-.872.28a9.043 9.043 0 0 1 2.22 1.88A1.5 1.5 0 0 0 17.5 5"/></g></svg>
+                    </div>
+                    {{ ucfirst($praktik->hari) }}
+                   <div>
+                    {{ \Carbon\Carbon::parse($praktik->jam_mulai)->format('H:i') }}
+                    - {{ \Carbon\Carbon::parse($praktik->jam_selesai)->format('H:i') }}
+                   </div>
+                </div>
+            </div>
+            @endforeach
+
         </div>
 
         <div class="w-full lg:w-1/2 text-center">
@@ -155,8 +174,12 @@
                     @enderror
                 </div>
                 {{-- Alamat --}}
-                <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                    <textarea name="address" id="" class="outline-none border-none w-full h-full focus:outline-none focus:ring-0" placeholder="Alamat"></textarea>
+                <div>
+                    <div class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
+                        <textarea name="address" id=""
+                            class="outline-none border-none w-full h-full focus:outline-none focus:ring-0"
+                            placeholder="Alamat"></textarea>
+                    </div>
                     @error('address')
                     <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
                     @enderror
@@ -270,7 +293,9 @@
                 <div>
                     <div
                         class="border border-primary relative rounded-xl overflow-hidden w-full m-auto py-2 px-4 bg-white">
-                        <textarea name="description" id="" cols="30" rows="10" class="outline-none border-none w-full h-full focus:outline-none focus:ring-0" placeholder="Deskripsi Masalah"></textarea>
+                        <textarea name="description" id="" cols="30" rows="10"
+                            class="outline-none border-none w-full h-full focus:outline-none focus:ring-0"
+                            placeholder="Deskripsi Masalah"></textarea>
                     </div>
                     @error('description')
                     <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>

@@ -18,7 +18,7 @@
                     <x-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
                         {{ __('Users') }}
                     </x-nav-link>
-                    <x-nav-link >
+                    <x-nav-link :href="route('admin.psikolog')" :active="request()->routeIs('admin.psikolog')">
                         {{ __('Psikolog') }}
                     </x-nav-link>
                     <x-nav-link >
@@ -81,6 +81,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('admin.users')" :active="request()->routeIs('admin.users')">
                 {{ __('Users') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('admin.psikolog')" :active="request()->routeIs('admin.psikolog')">
+                {{ __('Psikolog') }}
             </x-responsive-nav-link>
         </div>
 

@@ -16,7 +16,7 @@ class KonselingController extends Controller
     }
     public function create($id)
     {
-        $psikolog = Psikolog::find($id);
+        $psikolog = Psikolog::with(['praktik', 'user'])->findOrFail($id);
 
         return view('landing.booking', compact('psikolog'));
     }
@@ -25,8 +25,10 @@ class KonselingController extends Controller
         $validatedData = $request->validated();
         $validatedData['client_id'] = auth()->id();
 
-        $psikolog = Psikolog::findOrFail($id);
-        $konseling = $psikolog->konseling()->create($validatedData);
+        $psikolog_user = Psikolog::findOrFail($id)->user;
+        $validatedData['psikolog_id'] = $psikolog_user->id;
+
+        $psikolog_user->konselingAsPsikolog()->create($validatedData);
 
         return redirect()->route('landing-riwayat')->with('success', 'Data berhasil disimpan');
     }

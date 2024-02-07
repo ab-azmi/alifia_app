@@ -5,6 +5,7 @@ namespace App\Livewire\Landing;
 use App\Livewire\Users;
 use Livewire\Component;
 use App\Models\Conversation;
+use App\Notifications\KonselingDone;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class Riwayat extends Component
@@ -94,5 +95,21 @@ class Riwayat extends Component
 
         //reset note
         $this->note = '';
+
+        //get conversation that has sender_id and receiver_id equals to psikolog and client
+        //or vice versa
+        $conversation = Conversation::where(function($query) use($konseling){
+            $query->where('sender_id', $konseling->psikolog_id)
+                ->where('receiver_id', $konseling->client_id);
+        })->orWhere(function($query) use($konseling){
+            $query->where('sender_id', $konseling->client_id)
+                ->where('receiver_id', $konseling->psikolog_id);
+        })->first();
+        
+
+        //notify client that konseling is done
+        $konseling->client->notify(new KonselingDone(
+            $conversation->id
+        ));
     }
 }

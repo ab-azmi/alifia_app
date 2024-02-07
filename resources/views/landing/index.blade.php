@@ -27,7 +27,7 @@
     </div>
 
     {{-- Sesi Aktif --}}
-    <div class="mb-20 px-10 lg:px-32 flex lg:flex-row flex-col gap-10 items-center lg:items-stretch">
+    <div class="mb-20 px-10 lg:px-32 flex lg:flex-row flex-col gap-10 items-center lg:items-end ">
         @auth
         @if ($konselings->isNotEmpty())
         @foreach ($konselings as $item)
@@ -44,14 +44,7 @@
                 <div class="relative min-w-fit">
                     <img src="{{ asset('assets/images/girl.jpg') }}" alt="" srcset=""
                         class="rounded-full w-32 h-32 object-cover">
-                    @role('client')
-                    <div
-                        class="px-2 py-1 w-fit rounded-lg bg-icongreen absolute bottom-0 left-1/2 transform -translate-x-1/2">
-                        <h1 class=" text-white text-xs text-nowrap">{{
-                            \Carbon\Carbon::parse($item->psikolog->dataPsikolog->start)->format('H:i') }} - {{
-                            \Carbon\Carbon::parse($item->psikolog->dataPsikolog->end)->format('H:i') }}</h1>
-                    </div>
-                    @endrole
+                    
                 </div>
                 <div class="flex flex-col gap-2">
                     @role('client')
@@ -80,20 +73,7 @@
                         </div>
                         <h1 class="font-semibold text-slate-500">{{ $item->psikolog->dataPsikolog->experience }} Tahun
                             Pengalaman</h1>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="text-icongreen">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                <g fill="none" fill-rule="evenodd">
-                                    <path
-                                        d="M24 0v24H0V0zM12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036c-.01-.003-.019 0-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z" />
-                                    <path fill="currentColor"
-                                        d="M16 3a1 1 0 0 1 1 1v1h2a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h2V4a1 1 0 0 1 2 0v1h6V4a1 1 0 0 1 1-1M8 7H5v2h14V7h-3zm-3 4v8h14v-8zm2 2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H8a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2zm3-2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H12a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2zm3-2a1 1 0 0 1 1-1h.01a1 1 0 1 1 0 2H16a1 1 0 0 1-1-1m1 2a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2z" />
-                                </g>
-                            </svg>
-                        </div>
-                        <h1 class="font-semibold text-slate-500">{{ $item->psikolog->dataPsikolog->workdays }}</h1>
-                    </div>
+                    </div> 
                     @endrole
 
                     <a href="{{ route('landing-riwayat') }}"
@@ -102,6 +82,12 @@
             </div>
         </div>
         @endforeach
+        @if($konselings->count() >= 2)
+        <a href="" class="w-fit flex items-center shadow-lg rounded-md px-3 py-2 font-bold text-white h-10 bg-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036c-.01-.003-.019 0-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M5.94 5.94a1.5 1.5 0 0 1 2.12 0l5 5a1.5 1.5 0 0 1 0 2.12l-5 5a1.5 1.5 0 0 1-2.12-2.12L9.878 12l-3.94-3.94a1.5 1.5 0 0 1 0-2.12Zm6 0a1.5 1.5 0 0 1 2.12 0l5 5a1.5 1.5 0 0 1 0 2.12l-5 5a1.5 1.5 0 0 1-2.12-2.12L15.878 12l-3.94-3.94a1.5 1.5 0 0 1 0-2.12Z"/></g></svg>
+            More
+        </a>
+        @endif
         @endif
         @endauth
     </div>

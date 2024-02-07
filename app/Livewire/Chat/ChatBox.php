@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Chat;
 
+use App\Models\Conversation;
 use App\Models\Message;
+use App\Notifications\KonselingDone;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
@@ -142,6 +144,16 @@ class ChatBox extends Component
                     $this->selected_conversation->id
                 ));
             }
+        }else if($event['type'] == KonselingDone::class){
+            if($event['conversation_id'] == $this->selected_conversation->id){
+
+                Conversation::find($event['conversation_id'])->update([
+                    'active' => 0
+                ]);
+
+                $this->dispatch('hide-chat-input');
+            }
         }
     }
+
 }

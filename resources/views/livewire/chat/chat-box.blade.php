@@ -150,30 +150,34 @@
             @endif
 
         </main>
-
         {{-- Footer. Send Message --}}
-        <footer class="shrink-0 z-10 bg-white inset-x-0">
-            <div class="p-2 border-t">
-                <form wire:submit="sendMessage" method="POST" autocapitalize="off">
-                    @csrf
+        @if ($selected_conversation?->active)
+           <div x-data="{showInput: true}">
+            <footer @hide-chat-input.window="showInput=false" x-show="showInput" class="shrink-0 z-10 bg-white inset-x-0">
+                <div class="p-2 border-t">
+                    <form wire:submit="sendMessage" method="POST" autocapitalize="off">
+                        @csrf
 
-                    <input type="hidden" autocomplete="false" style="display: none">
+                        <input type="hidden" autocomplete="false" style="display: none">
 
-                    <div class="grid grid-cols-12">
-                        <input wire:model="body" type="text" autocomplete="off" autofocus
-                            placeholder="Write your message" maxlength="1700" class="col-span-10 bg-gray-100 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg focus:outline-none
+                        <div class="grid grid-cols-12">
+                            <input wire:model="body" type="text" autocomplete="off" autofocus
+                                placeholder="Write your message" maxlength="1700" class="col-span-10 bg-gray-100 outline-0 focus:border-0 focus:ring-0 hover:ring-0 rounded-lg focus:outline-none
                         @error('body') border-red-500 @enderror">
 
-                        <button type="submit" class="col-span-2">
-                            Send
-                        </button>
-                    </div>
-                </form>
-                @error('body')
-                <p class="text-xs">{{ $message }}</p>
-                @enderror
-            </div>
-        </footer>
+                            <button type="submit" class="col-span-2">
+                                Send
+                            </button>
+                        </div>
+                    </form>
+                    @error('body')
+                    <p class="text-xs">{{ $message }}</p>
+                    @enderror
+                </div>
+            </footer>
+           </div>
+        @endif
+
     </div>
 
 </div>

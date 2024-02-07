@@ -56,15 +56,31 @@ class KonselingRequest extends FormRequest
                 //get psikolog from id
                 $psikolog = \App\Models\Psikolog::find($this->input('psikolog_id'));
 
-                $the_day = strtolower(date('l', strtotime($this->input('date'))));
+                //get praktik days
+                $days = $psikolog->praktik->pluck('hari')->toArray();
+
+                //get day from date in indonesia
+                $the_day = date('l', strtotime($this->input('date')));
+                $translated_day = strtolower(__('app.days.' . $the_day));
+
+                // dd($translated_day, $days, in_array($translated_day, $days));
                 //check if date day is with in psikolog workdays list
-                if (!strpos($psikolog->workdays, $the_day)) {
+                if (!in_array($translated_day, $days)) {
                     $validator->errors()->add('date', 'Psikolog tidak bekerja pada hari ini');
                 }
 
-                //check if time is within psikolog work hours
-                if ($this->input('time') < $psikolog->start || $this->input('time') > $psikolog->end) {
-                    $validator->errors()->add('time', 'Psikolog tidak bekerja pada jam ini');
+                //get psikolog praktik that match the day
+                $praktik = $psikolog->praktik->where('hari', $translated_day)->first();
+                
+                if ($praktik) {
+                    //get psikolog praktik jam_mulai dan jam_selesai
+                    $start = $praktik->jam_mulai;
+                    $end = $praktik->jam_selesai;
+
+                    //check if time is within psikolog work hours
+                    if ($this->input('time') < $start || $this->input('time') > $end) {
+                        $validator->errors()->add('time', 'Psikolog tidak bekerja pada jam ini');
+                    }
                 }
             }
         });
