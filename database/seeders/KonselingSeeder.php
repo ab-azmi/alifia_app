@@ -28,6 +28,15 @@ class KonselingSeeder extends Seeder
             'gender' => 1,
             'address' => 'Jl. Raya Bogor',
             'category' => 1,
+            'description' => 'Konseling untuk mengatasi masalah pencernaan', 
+        ]);
+        Konseling::create([
+            'psikolog_id' => $psikolog->id + 1,
+            'client_id' => $client->id,
+            'phone' => '62839394723',
+            'gender' => 1,
+            'address' => 'Jl. Raya Bogor',
+            'category' => 2,
             'date' => '2021-01-21',
             'time' => '10:00:00',
             'description' => 'Konseling untuk mengatasi masalah pencernaan', 

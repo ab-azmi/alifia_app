@@ -20,7 +20,8 @@ class ChatBox extends Component
 
     public $paginate = 10;
 
-    public function mount(){
+    public function mount()
+    {
         $this->loadMessages();
     }
 
@@ -29,7 +30,8 @@ class ChatBox extends Component
         return view('livewire.chat.chat-box');
     }
 
-    public function getListeners(){
+    public function getListeners()
+    {
         $auth_id = auth()->id();
 
         return [
@@ -38,7 +40,9 @@ class ChatBox extends Component
         ];
     }
 
-    public function loadMore(){
+    #[On('load-more')]
+    public function loadMore()
+    {
         $this->paginate += 10;
         $this->loadMessages();
 
@@ -46,7 +50,8 @@ class ChatBox extends Component
         $this->dispatch('update-chat-height');
     }
 
-    public function sendMessage(){
+    public function sendMessage()
+    {
         $this->validate();
         $created_message = $this->selected_conversation->messages()->create([
             'sender_id' => auth()->id(),
@@ -75,41 +80,52 @@ class ChatBox extends Component
         ));
     }
 
-    public function loadMessages(){
+    public function loadMessages()
+    {
         $userId = auth()->id();
 
         #get count
         $count = Message::where('conversation_id', $this->selected_conversation->id)
             ->where(function ($query) use ($userId) {
+                $query->where(function ($query) use ($userId) {
 
-                $query->where('sender_id', $userId)
-                    ->whereNull('sender_deleted_at');
-            })->orWhere(function ($query) use ($userId) {
+                    $query->where(['sender_id' => $userId])
+                        ->whereNull('sender_deleted_at');
+                })
+                    ->orWhere(function ($query) use ($userId) {
 
-                $query->where('receiver_id', $userId)
-                    ->whereNull('receiver_deleted_at');
+                        $query->where(['receiver_id' => $userId])
+                            ->whereNull('receiver_deleted_at');
+                    });
             })
             ->count();
-        
+
         #skip and query
         $this->loaded_messages = Message::where('conversation_id', $this->selected_conversation->id)
             ->where(function ($query) use ($userId) {
+                $query->where(function ($query) use ($userId) {
 
-                $query->where('sender_id', $userId)
-                    ->whereNull('sender_deleted_at');
-            })->orWhere(function ($query) use ($userId) {
+                    $query->where(['sender_id' => $userId])
+                        ->whereNull('sender_deleted_at');
+                })
+                    ->orWhere(function ($query) use ($userId) {
 
-                $query->where('receiver_id', $userId)
-                    ->whereNull('receiver_deleted_at');
+                        $query->where(['receiver_id' => $userId])
+                            ->whereNull('receiver_deleted_at');
+                    });
             })
             ->skip($count - $this->paginate)
             ->take($this->paginate)
             ->get();
+
+        // dd($this->loaded_messages->toArray(), $this->selected_conversation->toArray());
+
     }
 
-    public function broadcastedNotifications($event){
-        if($event['type'] == MessageSent::class){
-            if($event['conversation_id'] == $this->selected_conversation->id){
+    public function broadcastedNotifications($event)
+    {
+        if ($event['type'] == MessageSent::class) {
+            if ($event['conversation_id'] == $this->selected_conversation->id) {
                 $new_message = Message::find($event['message_id']);
                 #push new message
                 $this->loaded_messages->push($new_message);

@@ -11,7 +11,14 @@ class LandingController extends Controller
         //if user is authenticated, get active konseling
         $konselings = collect();
         if (auth()->check()) {
-            $konselings = auth()->user()->konseling()->where('berlangsung', true)->with('psikolog', 'client')->get();
+            //if user is psikolog, get active konseling as psikolog
+            if (auth()->user()->hasRole('psikolog')) {
+                $konselings = auth()->user()->konselingAsPsikolog()->where('berlangsung', true)->with('psikolog', 'client')->get();
+            }
+            //if user is client, get active konseling as client
+            else {
+                $konselings = auth()->user()->konselingAsClient()->where('berlangsung', true)->with('psikolog', 'client')->get();
+            }
         }
 
         return view('landing.index', compact('konselings'));

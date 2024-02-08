@@ -55,10 +55,14 @@ class User extends Authenticatable
         return 'users.' . $this->id;
     }
 
-    public function konseling()
+    public function konselingAsClient()
     {
-        return $this->hasMany(Konseling::class, 'client_id')
-            ->orWhere('psikolog_id', $this->id);
+        return $this->hasMany(Konseling::class, 'client_id');
+    }
+
+    public function konselingAsPsikolog()
+    {
+        return $this->hasMany(Konseling::class, 'psikolog_id');
     }
 
     public function dataPsikolog(){

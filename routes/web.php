@@ -11,6 +11,7 @@ use App\Http\Controllers\KonselingController;
 use App\Http\Controllers\LandingController;
 use App\Livewire\Landing\Psikolog;
 use App\Livewire\Landing\Riwayat;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/booking/{id}', [KonselingController::class, 'create'])->name('booking');
     Route::post('/booking-store/{id}', [KonselingController::class, 'store'])->name('booking-store');
+    Route::get('/cetak-hasil/{id}', [KonselingController::class, 'cetakHasil'])->name('cetak-hasil');
 });
-
 
 require __DIR__ . '/auth.php';

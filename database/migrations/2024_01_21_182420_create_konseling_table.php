@@ -28,6 +28,7 @@ return new class extends Migration
             $table->time('time')->nullable();
             $table->boolean('berlangsung')->default(true);
             $table->string('description');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

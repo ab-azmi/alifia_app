@@ -49,37 +49,11 @@
                             text-sm', 'text-primary font-bold'=> request()->routeIs('landing-psikolog'), 'text-slate-800
                             hover:text-primary dark:text-white' => !request()->routeIs('landing-psikolog')])>Cari
                             Psikolog</a>
-
-                        <div class="relative ml-3" x-data="{isOpen: false}">
-                            <div>
-                                <button @click.prevent="isOpen = !isOpen" @class(['rounded-md px-3 py-2 text-sm flex
-                                    items-center', 'text-primary font-bold'=> request()->routeIs('landing-riwayat'),
-                                    'text-slate-800
-                                    hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])>
-                                    Riwayat
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                                        <path fill="currentColor" d="m12 15l-5-5h10z" />
-                                    </svg>
-                                </button>
-                            </div>
-
-                            <div x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
-                                x-transition:enter-start="opacity-0 scale-95"
-                                x-transition:enter-end="opacity-100 scale-100"
-                                x-transition:leave="transition ease-in duration-75 transform"
-                                x-transition:leave-start="opacity-100 scale-100"
-                                x-transition:leave-end="opacity-0 scale-95"
-                                class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
-                                tabindex="-1">
-                                <!-- Active: "bg-gray-100", Not Active: "" -->
-                                <a href="{{ route('landing-riwayat') }}" class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-0">Konseling Online</a>
-                                <a href="{{ route('landing-riwayat') }}" class="block px-4 py-2 text-sm text-gray-700"
-                                    role="menuitem" tabindex="-1" id="user-menu-item-1">Konseling Offline</a>
-                            </div>
-                        </div>
-
+                            
+                        <a href="{{ route('landing-riwayat') }}" @class(['rounded-md px-3 py-2
+                            text-sm', 'text-primary font-bold'=> request()->routeIs('landing-riwayat'), 'text-slate-800
+                            hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])>Riwayat</a>
+                
                     </div>
                 </div>
             </div>
@@ -100,13 +74,16 @@
                 <div class="relative ml-3" x-data="{isOpen: false}">
                     <div>
                         <button @click.prevent="isOpen = !isOpen" type="button"
-                            class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                            class="relative flex rounded-full bg-gray-800 text-sm focus:outline-none ring-2 ring-primary ring-offset-2 ring-offset-gray-800"
                             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">Open user menu</span>
                             <img class="h-8 w-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                src="{{ auth()->user()->dataPsikolog?->photo ? asset('assets/images/psikolog/'. auth()->user()->dataPsikolog?->photo) : 'https://ui-avatars.com/api/?background=5271FF&color=fff&name='. auth()->user()->name}}"
                                 alt="">
+                            @role('psikolog')
+                            <span class="px-1 py-0.5 rounded bg-primary text-white text-xs absolute bottom-0 -right-3">Psi</span>
+                            @endrole
                         </button>
                     </div>
 
@@ -164,32 +141,11 @@
                 font-medium', 'text-primary font-bold'=> request()->routeIs('landing-psikolog'), 'text-slate-800
                 hover:text-primary dark:text-white' => !request()->routeIs('landing-psikolog')])
                 aria-current="page">Cari Psikolog</a>
-            <div class="relative" x-data="{isOpen: false}">
-                <div>
-                    <button @click.prevent="isOpen = !isOpen" @class(['rounded-md px-3 py-2 text-sm flex
-                        items-center', 'text-primary font-bold'=> request()->routeIs('landing-riwayat'),
-                        'text-slate-800
-                        hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])>
-                        Riwayat
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24">
-                            <path fill="currentColor" d="m12 15l-5-5h10z" />
-                        </svg>
-                    </button>
-                </div>
-
-                <div x-show="isOpen" x-transition:enter="transition ease-out duration-100 transform"
-                    x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-75 transform"
-                    x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95"
-                    class="absolute left-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
-                    <!-- Active: "bg-gray-100", Not Active: "" -->
-                    <a href="{{ route('landing-riwayat') }}" class="block px-4 py-2 text-sm text-gray-700"
-                        role="menuitem" tabindex="-1" id="user-menu-item-0">Konseling Online</a>
-                    <a href="{{ route('landing-riwayat') }}" class="block px-4 py-2 text-sm text-gray-700"
-                        role="menuitem" tabindex="-1" id="user-menu-item-1">Konseling Offline</a>
-                </div>
-            </div>
+            <a href="{{ route('landing-riwayat') }}" @class(['block rounded-md px-3 py-2 text-base
+                font-medium', 'text-primary font-bold'=> request()->routeIs('landing-riwayat'), 'text-slate-800
+                hover:text-primary dark:text-white' => !request()->routeIs('landing-riwayat')])
+                aria-current="page">Riwayat</a>
+            
 
         </div>
     </div>
