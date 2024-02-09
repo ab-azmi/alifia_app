@@ -83,7 +83,7 @@
         </div>
         @endforeach
         @if($konselings->count() >= 2)
-        <a href="" class="w-fit flex items-center shadow-lg rounded-md px-3 py-2 font-bold text-white h-10 bg-primary">
+        <a href="{{ route('landing-riwayat') }}" class="w-fit flex items-center shadow-lg rounded-md px-3 py-2 font-bold text-white h-10 bg-primary">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" fill-rule="evenodd"><path d="M24 0v24H0V0zM12.594 23.258l-.012.002l-.071.035l-.02.004l-.014-.004l-.071-.036c-.01-.003-.019 0-.024.006l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.016-.018m.264-.113l-.014.002l-.184.093l-.01.01l-.003.011l.018.43l.005.012l.008.008l.201.092c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.003-.011l.018-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M5.94 5.94a1.5 1.5 0 0 1 2.12 0l5 5a1.5 1.5 0 0 1 0 2.12l-5 5a1.5 1.5 0 0 1-2.12-2.12L9.878 12l-3.94-3.94a1.5 1.5 0 0 1 0-2.12Zm6 0a1.5 1.5 0 0 1 2.12 0l5 5a1.5 1.5 0 0 1 0 2.12l-5 5a1.5 1.5 0 0 1-2.12-2.12L15.878 12l-3.94-3.94a1.5 1.5 0 0 1 0-2.12Z"/></g></svg>
             More
         </a>
@@ -93,7 +93,7 @@
     </div>
 
     {{-- Tentang Kami Section--}}
-    <div id="tentang_kami" class="bg-white w-full px-16 pt-20 pb-36 flex flex-col gap-y-20 relative">
+    <div id="tentang_kami" class="bg-white w-full lg:px-16 pt-20 pb-36 flex flex-col gap-y-20 relative">
         <div class="absolute top-1 left-0">
             <img src="{{ asset('assets/images/dotgrid.svg') }}" alt="" srcset="" class="w-32">
         </div>
@@ -150,7 +150,7 @@
     </div>
 
     {{-- Layanan Konseling --}}
-    <div id="konseling" class="py-20 px-16 flex flex-col gap-y-20">
+    <div id="konseling" class="py-20 lg:px-16 flex flex-col gap-y-20">
         <div class="w-fit font-axiforma m-auto text-center flex flex-col gap-4">
             <h1
                 class="font-bold tracking-widest text-primary text-2xl before:content-['Laya'] before:bg-lightprimary before:pl-10 before:py-1">nan Konseling
@@ -195,7 +195,7 @@
     </div>
 
     {{-- Cari Psikolog --}}
-    <div class="bg-white w-full px-16 pt-20">
+    <div class="bg-white w-full px-16 pt-20 flex flex-col">
         <div class="w-fit m-auto text-center flex flex-col gap-4">
             <h1
                 class="font-bold tracking-widest text-primary text-2xl before:content-['C'] before:bg-lightprimary before:pl-10 before:py-1">ari Psikolog
