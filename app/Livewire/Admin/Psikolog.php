@@ -27,71 +27,129 @@ class Psikolog extends Component
     public $sortDirection = 'desc';
 
     public $selectedUser = null;
-    
+
+    public $freeUsersAccount = [];
+
     public $form = [
+        'account_id' => '',
         'name' => '',
-        'email' => '',
-        'password' => '',
-        'password_confirmation' => '',
-        'role' => '',
+        'degree' => '',
+        'session' => '',
+        'experience' => '',
+        'status' => false,
+        'photo' => '',
+        'location' => '',
     ];
 
     public function render()
     {
         $users = User::whereHas('roles', function ($query) {
-                    $query->where('name', 'psikolog');
-                })
-                ->with('dataPsikolog')
-                ->search($this->search)
-                ->when($this->userRole, function ($query) {
-                    return $query->role($this->userRole);
-                })
-                ->orderBy($this->sortBy, $this->sortDirection)
-                ->paginate($this->perPage);
+            $query->where('name', 'psikolog');
+        })
+            ->with('dataPsikolog')
+            ->search($this->search)
+            ->when($this->userRole, function ($query) {
+                return $query->role($this->userRole);
+            })
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage);
 
         return view('livewire.admin.psikolog', [
-        
-                'users' => $users,
-            ])->layout('layouts.app');
+
+            'users' => $users,
+        ])->layout('layouts.app');
     }
 
     public function deleteUser()
     {
-        User::find($this->selected_user)->delete();
+        User::find($this->selectedUser)->delete();
     }
 
-    public function setSortBy($column){
+    public function setSortBy($column)
+    {
         $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
         $this->sortBy = $column;
     }
 
-    public function editUser($id)
+    public function editUser($id = null)
     {
-        $user = User::find($id);
-        $this->form = [
-            'name' => $user->name,
-            'email' => $user->email,
-            'role' => $user->roles->first() ? json_encode($user->roles->first()) : '',
-        ];
-        $this->selectedUser = $id;
+        if ($id) {
+            $user = User::with('dataPsikolog')->find($id);
+            $this->form = [
+                'name' => $user->dataPsikolog->name,
+                'degree' => $user->dataPsikolog->degree,
+                'session' => $user->dataPsikolog->session,
+                'experience' => $user->dataPsikolog->experience,
+                'status' => $user->dataPsikolog->status === 1 ? true : false,
+                'photo' => $user->dataPsikolog->photo,
+                'location' =>  $user->dataPsikolog->location,
+            ];
+            $this->selectedUser = $id;
+        } else {
+            // get free user account that doesn't have role psikolog or client
+            $this->freeUsersAccount = User::whereDoesntHave('roles', function ($query) {
+                $query->where('name', 'psikolog')->orWhere('name', 'client');
+            })->get()->toArray();
+
+            $this->resetForm();
+        }
     }
 
     public function updateUser()
     {
-        // dd($this->form['role']['name']);
         $this->validate([
-            'form.name' => 'required|max:255',
-            'form.email' => 'required|email',
+            'form.name' => 'required|min:3|max:100',
+            'form.degree' => 'required|min:2|max:100',
+            'form.session' => 'required',
+            'form.experience' => 'required',
+            'form.status' => 'required',
+            'form.photo' => 'required',
+            'form.location' => 'required',
         ]);
 
         $user = User::find($this->selectedUser);
-        $user->update($this->form);
+        
+        $user->dataPsikolog->update($this->form);
+        $this->resetForm();
+        
+    }
 
-        //detach all role 
-        $user->roles()->detach();
+    public function createUser()
+    {
+        $this->validate([
+            'form.account_id' => 'required|exists:users,id',
+            'form.name' => 'required|min:3|max:100',
+            'form.degree' => 'required|min:2|max:100',
+            'form.session' => 'required',
+            'form.experience' => 'required',
+            'form.status' => 'required',
+            'form.location' => 'required',
+        ]);
+        
+        $user = User::find($this->form['account_id']);
 
-        $user->assignRole($this->form['role']['name']);
+        $user->assignRole('psikolog');
 
+        //remove account_id from form
+        unset($this->form['account_id']);
+
+        $user->dataPsikolog()->create($this->form);
+
+        $this->resetForm();
+    }
+
+    public function resetForm()
+    {
+        $this->form = [
+            'account_id' => '',
+            'name' => '',
+            'degree' => '',
+            'session' => '',
+            'experience' => '',
+            'status' => false,
+            'photo' => '',
+            'location' => '',
+        ];
         $this->selectedUser = null;
     }
 }

@@ -50,7 +50,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Admin routes
     Route::middleware('role:admin')->prefix('admin')->group(function(){
-        Route::get('/dashboard', Dashboard::class)->name('admin.dashboard');
+        Route::get('/', Dashboard::class)->name('admin.dashboard');
         Route::get('/users', AdminUsers::class)->name('admin.users');
         Route::get('/psikolog', AdminPsikolog::class)->name('admin.psikolog');
 
