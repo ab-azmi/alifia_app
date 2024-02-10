@@ -10,6 +10,7 @@ use App\Http\Controllers\PsikologController;
 use App\Http\Controllers\KonselingController;
 use App\Http\Controllers\LandingController;
 use App\Livewire\Admin\Dashboard;
+use App\Livewire\Admin\Konseling;
 use App\Livewire\Admin\Psikolog as AdminPsikolog;
 use App\Livewire\Admin\Users as AdminUsers;
 use App\Livewire\Landing\Psikolog;
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', Dashboard::class)->name('admin.dashboard');
         Route::get('/users', AdminUsers::class)->name('admin.users');
         Route::get('/psikolog', AdminPsikolog::class)->name('admin.psikolog');
+        Route::get('/konseling', Konseling::class)->name('admin.konseling');
 
     });
 });

@@ -172,9 +172,9 @@
                         </x-modal>
 
                         {{-- Modal Edit --}}
-                        <x-modal name="edit" :show="$errors->userDeletion->isNotEmpty()" focusable>
+                        <x-modal name="edit" focusable>
                             <div class="p-6">
-                                <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                                <form method="post" class="p-6">
                                     @csrf
                                     @method('post')
 
