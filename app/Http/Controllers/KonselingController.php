@@ -17,7 +17,7 @@ class KonselingController extends Controller
     public function create($id)
     {
         $psikolog = Psikolog::with(['praktik', 'user'])->findOrFail($id);
-
+        
         return view('landing.booking', compact('psikolog'));
     }
     public function store(KonselingRequest $request, $id)

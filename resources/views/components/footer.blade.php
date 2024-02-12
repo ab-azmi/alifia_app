@@ -24,7 +24,7 @@
             <h1 class="text-4xl font-bold">Social Media</h1>
         </div>
     </div>
-    <div class="text-white bg-slate-900 text-center py-2">
+    <div class="text-white bg-slate-900 text-center py-2 text-xs">
         © 2024 Copyright Alifia P. All rights reserved and content created without AI.
     </div>
 </div>

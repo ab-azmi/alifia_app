@@ -195,7 +195,7 @@
     </div>
 
     {{-- Cari Psikolog --}}
-    <div class="bg-white w-full px-16 pt-20 flex flex-col">
+    <div class="bg-white w-full lg:px-16 pt-20 flex flex-col">
         <div class="w-fit m-auto text-center flex flex-col gap-4">
             <h1
                 class="font-bold tracking-widest text-primary text-2xl before:content-['C'] before:bg-lightprimary before:pl-10 before:py-1">ari Psikolog
@@ -203,13 +203,14 @@
             <h1 class="text-4xl font-bold text-display">Rekomendasi Psikolog</h1>
         </div>
         <div class="flex lg:flex-row flex-col items-center lg:items-stretch justify-center gap-7 mt-14">
-            <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
+            @foreach ($psikologs as $psi)
+            <div class="lg:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
                 <div>
-                    <img src="{{ asset('assets/images/girl1.jpg') }}" alt="" srcset=""
+                    <img src="{{ $psi->photo ? asset('assets/images/psikolog/'. $psi?->photo) : 'https://ui-avatars.com/api/?background=5271FF&color=fff&name='.$psi?->name }}" alt="" srcset=""
                         class="rounded-full w-44 h-44 object-cover">
                 </div>
                 <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-bold text-2xl">Lusiana M.Psi., Psikolog</h1>
+                    <h1 class="text-primary font-bold text-2xl">{{ $psi->name }} {{ $psi->degree }}, Psikolog</h1>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
@@ -217,7 +218,7 @@
                                     d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8" />
                             </svg>
                         </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">14 Sesi</h1>
+                        <h1 class="font-semibold text-slate-500 text-lg">{{ $psi->session }} Sesi</h1>
                     </div>
                     <div class="flex gap-3">
                         <div class="text-icongreen">
@@ -226,88 +227,25 @@
                                     d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z" />
                             </svg>
                         </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">1 Tahun Pengalaman</h1>
+                        <h1 class="font-semibold text-slate-500 text-lg text-left">{{ $psi->experience }} Tahun Pengalaman</h1>
                     </div>
 
                 </div>
                 <div class="flex gap-4 w-full mt-6">
-                    <div
-                        class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">
-                        Ada</div>
-                    <a href="/booking/1"
-                        class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
+                    @if($psi->status == 0)
+                        <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-slate-700 text-white font-bold hover:bg-gradient-to-l transition-all">Sibuk</div>
+                    @else
+                        <div class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">Ada</div>
+                    @endif
+                    <a href="{{ $psi->status == 0 ? 'javascript:void(0)' : route('booking', $psi->id) }}" 
+                        class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center 
+                        rounded-lg {{ $psi->status == 0 ? 'bg-slate-700' : 'bg-icongreen' }} text-white 
+                        font-bold hover:bg-gradient-to-l transition-all">
+                        Booking
+                    </a>
                 </div>
             </div>
-            <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
-                <div>
-                    <img src="{{ asset('assets/images/ethan.png') }}" alt="" srcset=""
-                        class="rounded-full w-44 h-44 object-cover">
-                </div>
-                <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-bold text-2xl">Budiman M.Psi., Psikolog</h1>
-                    <div class="flex gap-3">
-                        <div class="text-icongreen">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8" />
-                            </svg>
-                        </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">14 Sesi</h1>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="text-icongreen">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z" />
-                            </svg>
-                        </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">1 Tahun Pengalaman</h1>
-                    </div>
-
-                </div>
-                <div class="flex gap-4 w-full mt-6">
-                    <div
-                        class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-slate-700 text-white font-bold hover:bg-gradient-to-l transition-all">
-                        Sibuk</div>
-                    <a href="#"
-                        class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
-                </div>
-            </div>
-            <div class="md:w-[30%] rounded-lg shadow-lg bg-white px-10 py-10 flex flex-col gap-7 items-center">
-                <div>
-                    <img src="{{ asset('assets/images/girl2.jpg') }}" alt="" srcset=""
-                        class="rounded-full w-44 h-44 object-cover">
-                </div>
-                <div class="flex flex-col gap-5 w-full text-center px-6">
-                    <h1 class="text-primary font-bold text-2xl">Amanda M.Psi., Psikolog</h1>
-                    <div class="flex gap-3">
-                        <div class="text-icongreen">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M1 17.2q0-.85.438-1.562T2.6 14.55q1.55-.775 3.15-1.162T9 13q1.65 0 3.25.388t3.15 1.162q.725.375 1.163 1.088T17 17.2v.8q0 .825-.587 1.413T15 20H3q-.825 0-1.412-.587T1 18zM18.45 20q.275-.45.413-.962T19 18v-1q0-1.1-.612-2.113T16.65 13.15q1.275.15 2.4.513t2.1.887q.9.5 1.375 1.112T23 17v1q0 .825-.587 1.413T21 20zM9 12q-1.65 0-2.825-1.175T5 8q0-1.65 1.175-2.825T9 4q1.65 0 2.825 1.175T13 8q0 1.65-1.175 2.825T9 12m10-4q0 1.65-1.175 2.825T15 12q-.275 0-.7-.062t-.7-.138q.675-.8 1.038-1.775T15 8q0-1.05-.362-2.025T13.6 4.2q.35-.125.7-.162T15 4q1.65 0 2.825 1.175T19 8" />
-                            </svg>
-                        </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">14 Sesi</h1>
-                    </div>
-                    <div class="flex gap-3">
-                        <div class="text-icongreen">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
-                                <path fill="currentColor"
-                                    d="M4 22q-.825 0-1.412-.587T2 20V8q0-.825.588-1.412T4 6h4V4q0-.825.588-1.412T10 2h4q.825 0 1.413.588T16 4v2h4q.825 0 1.413.588T22 8v12q0 .825-.587 1.413T20 22zm6-16h4V4h-4zm1 9v2q0 .425.288.713T12 18q.425 0 .713-.288T13 17v-2h2q.425 0 .713-.288T16 14q0-.425-.288-.712T15 13h-2v-2q0-.425-.288-.712T12 10q-.425 0-.712.288T11 11v2H9q-.425 0-.712.288T8 14q0 .425.288.713T9 15z" />
-                            </svg>
-                        </div>
-                        <h1 class="font-semibold text-slate-500 text-lg">1 Tahun Pengalaman</h1>
-                    </div>
-
-                </div>
-                <div class="flex gap-4 w-full mt-6">
-                    <div
-                        class="py-2 mt-2 justify-center w-fit px-5 flex gap-x-3 items-center rounded-lg bg-primary/90 text-white font-bold hover:bg-gradient-to-l transition-all">
-                        Ada</div>
-                    <a href="#"
-                        class="py-2 mt-2 justify-center w-full flex gap-x-3 items-center rounded-lg bg-icongreen text-white font-bold hover:bg-gradient-to-l transition-all">Booking</a>
-                </div>
-            </div>
+            @endforeach
         </div>
         <div class="py-14 flex flex-col gap-14">
             <a href="{{ route('landing-psikolog') }}"
