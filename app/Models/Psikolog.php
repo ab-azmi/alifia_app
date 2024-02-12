@@ -15,4 +15,14 @@ class Psikolog extends Model
     {
         return $this->hasMany(Konseling::class);
     }
+
+    public function praktik()
+    {
+        return $this->hasMany(Praktik::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

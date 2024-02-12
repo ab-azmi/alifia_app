@@ -68,4 +68,9 @@ class User extends Authenticatable
     public function dataPsikolog(){
         return $this->hasOne(Psikolog::class, 'user_id');
     }
+
+    public function scopeSearch($query, $value){
+        $query->where('name', 'like', '%'.$value.'%')
+            ->orWhere('email', 'like', '%'.$value.'%');
+    }
 }

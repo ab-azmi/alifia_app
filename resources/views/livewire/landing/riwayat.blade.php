@@ -3,7 +3,8 @@
     {{-- Title --}}
     <div class="w-fit m-auto text-center flex flex-col gap-4 my-10">
         <h1
-            class="font-bold tracking-widest text-primary text-2xl before:content-['Riw'] before:bg-lightprimary before:pl-10 before:py-1">ayat Konseling Offline
+            class="font-bold tracking-widest text-primary text-2xl before:content-['Riw'] before:bg-lightprimary before:pl-10 before:py-1">
+            ayat Konseling Offline
         </h1>
         <h1 class="text-4xl font-bold text-display">Riwayat Pemesanan Layanan</h1>
     </div>
@@ -18,7 +19,7 @@
     </div>
     @endif
 
-    <div class="w-full" x-data="{ open: false, selected_konseling: '' }">
+    <div class="w-full" x-data="{ open: false, selected_konseling: '', open_modal: false }">
         <!-- Tabs -->
         <div class="relative right-0" x-data="{tab: 'one'}">
             <ul class="relative flex flex-wrap p-1 m-auto list-none rounded-lg w-[50%]" role="list">
@@ -42,48 +43,48 @@
         <!-- Tab Content -->
         @if (collect($konseling)->isNotEmpty())
         {{-- Table --}}
-        <table class="max-w-90 m-auto my-10 rounded-lg overflow-hidden">
-            <thead class="bg-primary text-white">
-                <tr>
-                    <th class="text-center px-16 py-4">Nama Dokter</th>
-                    <th class="text-center px-16 py-4">Jenis Konseling</th>
-                    <th class="text-center px-16 py-4">Waktu</th>
-                    <th class="text-center px-16 py-4">Status</th>
-                    <th class="text-center px-16 py-4">Aksi</th>
-
-                </tr>
-            </thead>
-            <tbody class="bg-white shadow-lg">
-                @foreach($konseling as $item)
-                <tr>
-                    <td class="text-center px-16 py-4">{{ $item->psikolog?->dataPsikolog?->name }} {{
-                        $item->psikolog?->dataPsikolog?->degree }}, Psikolog</td>
-                    @if($item->category == 1)
-                    <td class="text-center px-16 py-4">Online/Daring</td>
-                    @else
-                    <td class="text-center px-16 py-4">Offline/Luring</td>
-                    @endif
-
-                    @if($item->date && $item->time)
-                    <td class="text-center px-16 py-4">{{ $item->date }} - {{ $item->time }}</td>
-                    @else
-                    <td class="text-center px-16 py-4">—</td>
-                    @endif
-
-                    <td class="text-center px-16 py-4">
-                        @if($item->berlangsung == 0)
-                        <span class="bg-yellow-500 text-white rounded-full px-4 py-1 text-xs">Menunggu</span>
-                        @elseif($item->berlangsung == 1)
-                        <span class="bg-green-500 text-white rounded-full px-4 py-1 text-xs">Berlangsung</span>
+        <div class=" overflow-auto">
+            <table class="max-w-90 m-auto my-10 rounded-lg ">
+                <thead class="bg-primary text-white">
+                    <tr>
+                        <th class="text-center px-16 py-4">Nama Dokter</th>
+                        <th class="text-center px-16 py-4">Jenis Konseling</th>
+                        <th class="text-center px-16 py-4">Waktu</th>
+                        <th class="text-center px-16 py-4">Status</th>
+                        <th class="text-center px-16 py-4">Aksi</th>
+    
+                    </tr>
+                </thead>
+                <tbody class="bg-white shadow-lg">
+                    @foreach($konseling as $item)
+                    <tr>
+                        <td class="text-center px-16 py-4">{{ $item->psikolog?->dataPsikolog?->name }} {{
+                            $item->psikolog?->dataPsikolog?->degree }}, Psikolog</td>
+                        @if($item->category == 1)
+                        <td class="text-center px-16 py-4">Online/Daring</td>
                         @else
-                        <span class="bg-red-500 text-white rounded-full px-4 py-1 text-xs">Selesai</span>
+                        <td class="text-center px-16 py-4">Offline/Luring</td>
                         @endif
-                    </td>
-                    <td class="text-center px-16 py-4 flex gap-3">
-                        @if ($item->berlangsung <= 1) 
-                            @role('client') 
-                                <button
-                                wire:click="goToMessage({{ $item->psikolog_id }})"
+    
+                        @if($item->date && $item->time)
+                        <td class="text-center px-16 py-4">{{ $item->date }} - {{ $item->time }}</td>
+                        @else
+                        <td class="text-center px-16 py-4">—</td>
+                        @endif
+    
+                        <td class="text-center px-16 py-4">
+                            @if($item->berlangsung == 0)
+                            <span class="bg-yellow-500 text-white rounded-full px-4 py-1 text-xs">Menunggu</span>
+                            @elseif($item->berlangsung == 1)
+                            <span class="bg-green-500 text-white rounded-full px-4 py-1 text-xs">Berlangsung</span>
+                            @else
+                            <span class="bg-red-500 text-white rounded-full px-4 py-1 text-xs">Selesai</span>
+                            @endif
+                        </td>
+                        <td class="text-center px-16 py-4 flex gap-3">
+    
+                            @role('client')
+                            <button wire:click="goToMessage({{ $item->psikolog_id }})"
                                 class="text-white bg-primary px-3 py-2 rounded-md flex gap-1 items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
                                     <g fill="none" fill-rule="evenodd">
@@ -94,56 +95,57 @@
                                     </g>
                                 </svg>
                                 Chat
-                                </button>
+                            </button>
                             @endrole
                             @role('psikolog')
-                                <button wire:click="goToMessage({{ $item->client_id }})"
-                                    class="text-white bg-primary px-3 py-2 rounded-md flex gap-1 items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                        <g fill="none" fill-rule="evenodd">
-                                            <path
-                                                d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
-                                            <path fill="currentColor"
-                                                d="M13.5 3a8.5 8.5 0 0 1 0 17H13v.99A1.01 1.01 0 0 1 11.989 22c-2.46-.002-4.952-.823-6.843-2.504C3.238 17.798 2.002 15.275 2 12.009V11.5A8.5 8.5 0 0 1 10.5 3zm-5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3m7 0a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3" />
-                                        </g>
-                                    </svg>
-                                    Chat
-                                </button>
+                            <button wire:click="goToMessage({{ $item->client_id }})"
+                                class="text-white bg-primary px-3 py-2 rounded-md flex gap-1 items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                                    <g fill="none" fill-rule="evenodd">
+                                        <path
+                                            d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                                        <path fill="currentColor"
+                                            d="M13.5 3a8.5 8.5 0 0 1 0 17H13v.99A1.01 1.01 0 0 1 11.989 22c-2.46-.002-4.952-.823-6.843-2.504C3.238 17.798 2.002 15.275 2 12.009V11.5A8.5 8.5 0 0 1 10.5 3zm-5 7a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3m7 0a1.5 1.5 0 1 0 0 3a1.5 1.5 0 0 0 0-3" />
+                                    </g>
+                                </svg>
+                                Chat
+                            </button>
                             @endrole
-                        @endif
-
-                        @if ($item->berlangsung == 1)
-                        @role('psikolog')
-                        <button @click="open = true; selected_konseling = {{ $item->id }}"
-                            class="bg-icongreen px-3 py-2 rounded-md text-white">
-                            Selesai
-                        </button>
-                        @endrole
-                        @else
-                        <a href="{{ route('cetak-hasil', $item->id) }}" target="_blank"
-                            class="bg-primary px-3 py-2 rounded-md text-white w-fit flex items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
-                                <g fill="none">
-                                    <path
-                                        d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
-                                    <path fill="currentColor"
-                                        d="M16 16a1 1 0 0 1 .993.883L17 17v4a1 1 0 0 1-.883.993L16 22H8a1 1 0 0 1-.993-.883L7 21v-4a1 1 0 0 1 .883-.993L8 16zm3-9a3 3 0 0 1 3 3v7a2 2 0 0 1-2 2h-1v-3a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3H4a2 2 0 0 1-2-2v-7a3 3 0 0 1 3-3zm-2 2h-2a1 1 0 0 0-.117 1.993L15 11h2a1 1 0 0 0 .117-1.993zm0-7a1 1 0 0 1 1 1v2H6V3a1 1 0 0 1 1-1z" />
-                                </g>
-                            </svg>
-                            Hasil
-                        </a>
-                        @endif
-                    </td>
-
-                </tr>
-                @endforeach
-
-            </tbody>
-        </table>
+    
+    
+                            @if ($item->berlangsung == 1)
+                            @role('psikolog')
+                            <button @click="open_modal = true; selected_konseling = {{ $item->id }}"
+                                class="bg-icongreen px-3 py-2 rounded-md text-white">
+                                Selesai
+                            </button>
+                            @endrole
+                            @else
+                            <a href="{{ route('cetak-hasil', $item->id) }}" target="_blank"
+                                class="bg-primary px-3 py-2 rounded-md text-white w-fit flex items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24">
+                                    <g fill="none">
+                                        <path
+                                            d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z" />
+                                        <path fill="currentColor"
+                                            d="M16 16a1 1 0 0 1 .993.883L17 17v4a1 1 0 0 1-.883.993L16 22H8a1 1 0 0 1-.993-.883L7 21v-4a1 1 0 0 1 .883-.993L8 16zm3-9a3 3 0 0 1 3 3v7a2 2 0 0 1-2 2h-1v-3a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v3H4a2 2 0 0 1-2-2v-7a3 3 0 0 1 3-3zm-2 2h-2a1 1 0 0 0-.117 1.993L15 11h2a1 1 0 0 0 .117-1.993zm0-7a1 1 0 0 1 1 1v2H6V3a1 1 0 0 1 1-1z" />
+                                    </g>
+                                </svg>
+                                Hasil
+                            </a>
+                            @endif
+                        </td>
+    
+                    </tr>
+                    @endforeach
+    
+                </tbody>
+            </table>
+        </div>
         {{-- MOdal --}}
         <div>
             <!-- Modal container -->
-            <div x-show="open" class="fixed z-10 inset-0 overflow-y-auto">
+            <div x-cloak x-show="open_modal" class="fixed z-10 inset-0 overflow-y-auto">
                 <!-- Modal content -->
                 <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
                     <!-- Background overlay -->
@@ -171,11 +173,12 @@
                         </div>
                         <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                             <!-- Button to close the modal -->
-                            <button @click="open = false" type="button"
+                            <button @click="open_modal = false" type="button"
                                 class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                                 Close
                             </button>
-                            <button @click="$wire.selesaiKonseling(selected_konseling); open = false" type="button"
+                            <button @click="$wire.selesaiKonseling(selected_konseling); open_modal = false"
+                                type="button"
                                 class="mt-3 w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary text-base font-medium text-white hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
                                 Submit
                             </button>
@@ -186,7 +189,7 @@
         </div>
 
         @else
-        <div class="w-full flex items-center justify-center">
+        <div class="w-full flex items-center justify-center my-16">
             <div class="w-fit text-center">
                 <img src="{{ asset('assets/images/empty.svg') }}" alt="">
                 <h1 class="text-darkprimary mt-4 text-3xl font-black">

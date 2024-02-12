@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <div class="w-[30%] m-auto bg-lightprimary px-10 py-16 rounded-lg mt-20">
+    <div class="w-[30%] m-auto bg-lightprimary px-10 py-16 rounded-lg my-20">
         <div class="flex items-center flex-col mb-10">
             <div>
                 <img src="{{ asset('assets/images/logo.png') }}" alt="" srcset="" class="w-24">

@@ -20,4 +20,18 @@ class Konseling extends Model
     {
         return $this->belongsTo(User::class, 'client_id');
     }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('phone', 'like', '%' . $search . '%')
+            ->orWhereHas('psikolog', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orWhereHas('client', function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%');
+            })
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->orWhere('note', 'like', '%' . $search . '%');
+
+    }
 }

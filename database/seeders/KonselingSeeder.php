@@ -25,10 +25,11 @@ class KonselingSeeder extends Seeder
             'psikolog_id' => $psikolog->id,
             'client_id' => $client->id,
             'phone' => '62839394723',
-            'gender' => 1,
+            'gender' => 2,
             'address' => 'Jl. Raya Bogor',
             'category' => 1,
             'description' => 'Konseling untuk mengatasi masalah pencernaan', 
+            'note' => ''
         ]);
         Konseling::create([
             'psikolog_id' => $psikolog->id + 1,
@@ -39,7 +40,8 @@ class KonselingSeeder extends Seeder
             'category' => 2,
             'date' => '2021-01-21',
             'time' => '10:00:00',
-            'description' => 'Konseling untuk mengatasi masalah pencernaan', 
+            'description' => 'Konseling untuk menghalangi kebiasaan buruk', 
+            'note' => ''
         ]);
     }
 }

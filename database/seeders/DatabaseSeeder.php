@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Amanda Minerva',
             'email' => 'admin@gmail.com',
-        ])->assignRole('client');
+        ])->assignRole(['client', 'admin']);
 
         $this->call(PsikologSeeder::class);
 
