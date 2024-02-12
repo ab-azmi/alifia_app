@@ -25,7 +25,7 @@
             <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
                 <div class="flex flex-shrink-0 items-center">
                     <img class="h-10 w-auto" src="{{ asset('assets/images/logo.png') }}" alt="Your Company">
-
+                    <span class="uppercase font-bold text-primary font-axiforma">unnes wellbeing</span>
                 </div>
                 <div class="hidden sm:ml-6 sm:block">
                     <div class="flex space-x-2 lg:space-x-6 items-center">

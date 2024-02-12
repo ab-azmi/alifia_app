@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Psikolog;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
@@ -21,6 +22,9 @@ class LandingController extends Controller
             }
         }
 
-        return view('landing.index', compact('konselings'));
+        //get 3 psikologs order by session count
+        $psikologs = Psikolog::orderBy('session', 'desc')->take(3)->get();
+
+        return view('landing.index', compact('konselings', 'psikologs'));
     }
 }
