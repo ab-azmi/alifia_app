@@ -47,7 +47,14 @@
             <table class="max-w-90 m-auto my-10 rounded-lg ">
                 <thead class="bg-primary text-white">
                     <tr>
-                        <th class="text-center px-16 py-4">Nama Dokter</th>
+                        <th class="text-center px-16 py-4">
+                            @role('client')
+                            Nama Dokter
+                            @endrole
+                            @role('psikolog')
+                            Nama Pasien
+                            @endrole
+                        </th>
                         <th class="text-center px-16 py-4">Jenis Konseling</th>
                         <th class="text-center px-16 py-4">Waktu</th>
                         <th class="text-center px-16 py-4">Status</th>
@@ -58,8 +65,15 @@
                 <tbody class="bg-white shadow-lg">
                     @foreach($konseling as $item)
                     <tr>
-                        <td class="text-center px-16 py-4">{{ $item->psikolog?->dataPsikolog?->name }} {{
-                            $item->psikolog?->dataPsikolog?->degree }}, Psikolog</td>
+                        <td class="text-center px-16 py-4">
+                            @role('client')
+                            {{ $item->psikolog?->dataPsikolog?->name }} {{
+                                $item->psikolog?->dataPsikolog?->degree }}, Psikolog
+                            @endrole
+                            @role('psikolog')
+                            {{ $item->client?->name }}
+                            @endrole
+                        </td>
                         @if($item->category == 1)
                         <td class="text-center px-16 py-4">Online/Daring</td>
                         @else

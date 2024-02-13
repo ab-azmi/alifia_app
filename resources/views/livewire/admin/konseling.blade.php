@@ -286,9 +286,7 @@
                                         {{ __('Create Konseling') }}
                                         @endif
                                     </h2>
-
-
-                                   
+                            
                                     {{-- Nomor Handphone --}}
                                     <div class="mt-2">
                                         <x-input-label for="phone" value="{{ __('Phone') }}" class="s" />
