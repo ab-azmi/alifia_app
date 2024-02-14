@@ -42,9 +42,14 @@
             </div>
             <div class="flex md:flex-row flex-col items-center md:items-start h-full bg-white px-6 py-6 gap-7">
                 <div class="relative min-w-fit">
-                    <img src="{{ asset('assets/images/girl.jpg') }}" alt="" srcset=""
-                        class="rounded-full w-32 h-32 object-cover">
-                    
+                    @role('client')
+                    <img src="{{ $item->psikolog->dataPsikolog->photo ? asset('assets/images/psikolog/'. $item->psikolog->dataPsikolog->photo) : 'https://ui-avatars.com/api/?background=5271FF&color=fff&name='.$item->psikolog->dataPsikolog->name }}"
+                        alt="" srcset="" class="rounded-full w-24 h-24 object-cover">
+                    @endrole
+                    @role('psikolog')
+                    <img src="{{ $item->client->photo ? asset('assets/images/client/'. $item->client->photo) : 'https://ui-avatars.com/api/?background=5271FF&color=fff&name='.$item->client->name }}"
+                        alt="" srcset="" class="rounded-full w-24 h-24 object-cover">
+                    @endrole
                 </div>
                 <div class="flex flex-col gap-2">
                     @role('client')
