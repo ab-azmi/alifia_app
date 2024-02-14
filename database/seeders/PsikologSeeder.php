@@ -47,18 +47,6 @@ class PsikologSeeder extends Seeder
                 'jam_mulai' => '08:00:00',
                 'jam_selesai' => '16:00:00',
             ],
-            [
-                'psikolog_id' => $a->id,
-                'hari' => 'kamis',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $a->id,
-                'hari' => 'jumat',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
         ]);
 
         $b = Psikolog::create([
@@ -75,24 +63,7 @@ class PsikologSeeder extends Seeder
         ]);
 
         Praktik::insert([
-            [
-                'psikolog_id' => $b->id,
-                'hari' => 'senin',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $b->id,
-                'hari' => 'selasa',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $b->id,
-                'hari' => 'rabu',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
+            
             [
                 'psikolog_id' => $b->id,
                 'hari' => 'kamis',
@@ -129,19 +100,7 @@ class PsikologSeeder extends Seeder
             ],
             [
                 'psikolog_id' => $c->id,
-                'hari' => 'selasa',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $c->id,
                 'hari' => 'rabu',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $c->id,
-                'hari' => 'kamis',
                 'jam_mulai' => '08:00:00',
                 'jam_selesai' => '16:00:00',
             ],
@@ -167,24 +126,7 @@ class PsikologSeeder extends Seeder
         ]);
 
         Praktik::insert([
-            [
-                'psikolog_id' => $d->id,
-                'hari' => 'senin',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $d->id,
-                'hari' => 'selasa',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $d->id,
-                'hari' => 'rabu',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
+           
             [
                 'psikolog_id' => $d->id,
                 'hari' => 'kamis',
@@ -219,24 +161,7 @@ class PsikologSeeder extends Seeder
                 'jam_mulai' => '08:00:00',
                 'jam_selesai' => '16:00:00',
             ],
-            [
-                'psikolog_id' => $e->id,
-                'hari' => 'selasa',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $e->id,
-                'hari' => 'rabu',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $e->id,
-                'hari' => 'kamis',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
+           
             [
                 'psikolog_id' => $e->id,
                 'hari' => 'jumat',
@@ -268,18 +193,6 @@ class PsikologSeeder extends Seeder
             [
                 'psikolog_id' => $f->id,
                 'hari' => 'selasa',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $f->id,
-                'hari' => 'rabu',
-                'jam_mulai' => '08:00:00',
-                'jam_selesai' => '16:00:00',
-            ],
-            [
-                'psikolog_id' => $f->id,
-                'hari' => 'kamis',
                 'jam_mulai' => '08:00:00',
                 'jam_selesai' => '16:00:00',
             ],

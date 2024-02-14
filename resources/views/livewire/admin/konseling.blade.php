@@ -27,7 +27,7 @@
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 "
                                         placeholder="Search" required="">
                                 </div>
-                                <button x-on:click.prevent="$dispatch('open-modal', 'edit')" wire:click="editUser()"
+                                <button x-on:click.prevent="$dispatch('open-modal', 'edit')" wire:click="editKonseling()"
                                     class="bg-primary px-3 py-2 rounded-lg text-white flex gap-1 items-center">
                                     <span>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
@@ -46,7 +46,7 @@
                             <div class="flex space-x-3">
                                 <div class="flex space-x-3 items-center">
                                     <label class="w-40 text-sm font-medium text-gray-900">User Type :</label>
-                                    <select wire:model.live="userRole"
+                                    <select wire:model.live="konselingCategory"
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
                                         <option value="">All</option>
                                         <option value="2">Offline</option>
@@ -55,6 +55,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="overflow-x-auto">
                             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                                 <thead class="text-xs text-gray-700  bg-gray-50">
@@ -99,7 +100,7 @@
                                     <tr wire:key="{{ $kon->id }}" class="border-b dark:border-gray-700">
                                         <th scope="row"
                                             class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 items-center">
-                                            {{ $kon->psikolog?->name }} {{ $kon->psikolog?->degree }}
+                                            {{ $kon->psikolog?->dataPsikolog?->name }} {{ $kon->psikolog?->dataPsikolog?->degree }}
                                         </th>
                                         <td class="px-4 py-3">{{ $kon->client?->name }}x</td>
                                         <td class="px-4 py-3">{{ $kon->phone }}</td>
@@ -136,7 +137,7 @@
                                             {{ $kon->time ? \Carbon\Carbon::parse($kon->time)->format('H:i') : '' }}
                                         </td>
                                         <td class="px-4 py-3 text-white flex gap-1">
-                                            <span @class(['px-2 py-1 rounded', 'bg-primary'=>
+                                            <span @class(['px-2 py-1 rounded', 'bg-green-700'=>
                                                 $kon->berlangsung == true,
                                                 'bg-red-500' => $kon->berlangsung == false,
                                                 ])>
@@ -177,7 +178,7 @@
                                                 </svg>
                                             </button>
                                         </td>
-                                        <td class="px-4 py-3 flex items-center justify-end gap-2">
+                                        <td class="px-4 py-3 flex items-center gap-2">
                                             <button wire:click="selectedKonseling = {{ $kon->id }}"
                                                 x-on:click.prevent="$dispatch('open-modal', 'confirm-delete')"
                                                 class="px-2 py-2 bg-red-500 text-white rounded-md">
@@ -192,7 +193,7 @@
                                                 </svg>
                                             </button>
                                             <button
-                                                x-on:click.prevent="$wire.editUser({{ $kon->id }});$dispatch('open-modal', 'edit')"
+                                                x-on:click.prevent="$wire.editKonseling({{ $kon->id }});$dispatch('open-modal', 'edit')"
                                                 class="px-2 py-2 bg-yellow-500 text-white rounded">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                                     viewBox="0 0 24 24">
@@ -206,7 +207,7 @@
                                             </button>
                                             @if (!$kon->berlangsung)
                                             <button
-                                                x-on:click.prevent="$wire.editUser({{ $kon->id }});$dispatch('open-modal', 'edit')"
+                                                x-on:click.prevent="$wire.editKonseling({{ $kon->id }});$dispatch('open-modal', 'edit')"
                                                 class="px-2 py-2 bg-icongreen text-white rounded">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
                                                     viewBox="0 0 24 24">
@@ -287,8 +288,133 @@
                                         @endif
                                     </h2>
 
+                                    @if ($selectedKonseling == null)
+                                    {{-- Psikolog --}}
+                                    <div class="mt-4" >
+                                        <x-input-label for="" value="{{ __('Select Psikolog Account') }}" class="" />
+                                        
+                                        <div class="relative mt-2 w-3/4" x-data="{isOpen: false, selected_account: '', data: @entangle('psikologAccount')}">
+                                            <input type="text" class="invisible absolute"  name="gender">
+                                            <button type="button" @click.prevent="isOpen = !isOpen"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2 block w-full mt-1"
+                                                aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+                                                <span class="flex items-center">
+                                                   <div class="flex gap-x-1 ml-3" x-show="selected_account != ''">
+                                                        <span class=" block truncate"
+                                                        x-text="selected_account.data_psikolog?.name"></span>
+                                                        <span class="block truncate"
+                                                        x-text="selected_account.data_psikolog?.degree"></span>
+                                                   </div>
+                                                    <span x-show="selected_account === ''" class="ml-3 block truncate text-slate-500">
+                                                        Pilih Psikolog
+                                                    </span>
+                                                </span>
+                                                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                                        aria-hidden="true">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <ul x-show="isOpen" x-transition:enter="transition ease-in duration-100"
+                                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                                tabindex="-1" role="listbox" aria-labelledby="listbox-label"
+                                                aria-activedescendant="listbox-option-3">
+                                                <template x-for="(item, i) in data" :key="i">
+                                                    <li x-on:click="selected_account = item; isOpen = false"
+                                                        wire:click="form.psikolog_id = item.id"
+                                                        x-bind:class="selected_account.id == item.id ? 'bg-indigo-600 text-white' : 'text-gray-900'"
+                                                        class="hover:bg-indigo-600 hover:text-white relative cursor-default select-none py-2 pl-3 pr-9">
+                    
+                                                        <div class="flex items-center">
+                                                            <span class="font-normal ml-3 truncate flex gap-x-2">
+                                                                <span x-text="item.data_psikolog.name"></span>
+                                                                <span x-text="item.data_psikolog.degree"></span>
+                                                            </span>
+                                                        </div>
+                                                        <span class="text-white absolute inset-y-0 right-0 flex items-center pr-4">
+                                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                        </span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                        @error('gender')
+                                        <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div> 
 
-                                   
+                                    {{-- Client --}}
+                                    <div class="mt-4" >
+                                        <x-input-label for="" value="{{ __('Select Client Account') }}" class="" />
+                                        
+                                        <div class="relative mt-2 w-3/4" x-data="{isOpen: false, selected_account: '', data: @entangle('clientAccount')}">
+                                            <input type="text" class="invisible absolute"  name="gender">
+                                            <button type="button" @click.prevent="isOpen = !isOpen"
+                                                class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm p-2 block w-full mt-1"
+                                                aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label">
+                                                <span class="flex items-center">
+                                                   <div class="flex gap-x-1 ml-3" x-show="selected_account != ''">
+                                                        <span class=" block truncate"
+                                                        x-text="selected_account.name"></span>
+                                                   </div>
+                                                    <span x-show="selected_account === ''" class="ml-3 block truncate text-slate-500">
+                                                        Pilih Client
+                                                    </span>
+                                                </span>
+                                                <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                                                    <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor"
+                                                        aria-hidden="true">
+                                                        <path fill-rule="evenodd"
+                                                            d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+                                                </span>
+                                            </button>
+                                            <ul x-show="isOpen" x-transition:enter="transition ease-in duration-100"
+                                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                                x-transition:leave="transition ease-in duration-100" x-transition:leave-start="opacity-100"
+                                                x-transition:leave-end="opacity-0"
+                                                class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+                                                tabindex="-1" role="listbox" aria-labelledby="listbox-label"
+                                                aria-activedescendant="listbox-option-3">
+                                                <template x-for="(item, i) in data" :key="i">
+                                                    <li x-on:click="selected_account = item; isOpen = false"
+                                                        wire:click="form.client_id = item.id"
+                                                        x-bind:class="selected_account.id == item.id ? 'bg-indigo-600 text-white' : 'text-gray-900'"
+                                                        class="hover:bg-indigo-600 hover:text-white relative cursor-default select-none py-2 pl-3 pr-9">
+                    
+                                                        <div class="flex items-center">
+                                                            <span class="font-normal ml-3 truncate flex gap-x-2">
+                                                                <span x-text="item.name"></span>
+                                                            </span>
+                                                        </div>
+                                                        <span class="text-white absolute inset-y-0 right-0 flex items-center pr-4">
+                                                            <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                                                <path fill-rule="evenodd"
+                                                                    d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
+                                                                    clip-rule="evenodd" />
+                                                            </svg>
+                                                        </span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div>
+                                        @error('gender')
+                                        <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div> 
+                                    @endif
+
                                     {{-- Nomor Handphone --}}
                                     <div class="mt-2">
                                         <x-input-label for="phone" value="{{ __('Phone') }}" class="s" />
@@ -299,7 +425,7 @@
                                     {{-- Kelamin --}}
                                     <div class="mt-2">
                                         <x-input-label for="gender" value="{{ __('Gender') }}" class="s" />
-                                        <div class="relative w-3/4" x-data="{isOpen: false, selected_id: {{ old('gender') ?? 'null' }}, data: [
+                                        <div class="relative w-3/4" x-data="{isOpen: false, selected_id: @entangle('form.gender'), data: [
                                             {id: 1, name: 'Laki-laki'},
                                             {id: 2, name: 'Perempuan'},
                                         ], getData(id){
@@ -313,7 +439,7 @@
                                                 aria-labelledby="listbox-label">
                                                 <span class="flex items-center">
                                                     <span x-show="selected_id != null" class="ml-3 block truncate"
-                                                        x-text="getData(selected_id).name"></span>
+                                                        x-text="getData(selected_id)?.name"></span>
                                                     <span x-show="selected_id == null"
                                                         class="ml-3 block truncate text-slate-500">
                                                         Pilih Kelamin
@@ -340,6 +466,7 @@
                                                 aria-activedescendant="listbox-option-3">
                                                 <template x-for="(item, i) in data" :key="i">
                                                     <li x-on:click="selected_id = item.id, isOpen = false"
+                                                        wire:click="form.gender = item.id"
                                                         x-bind:class="selected_id === item.id ? 'bg-indigo-600 text-white' : 'text-gray-900'"
                                                         class="hover:bg-indigo-600 hover:text-white relative cursor-default select-none py-2 pl-3 pr-9">
 
@@ -368,11 +495,11 @@
                                     {{-- Alamat --}}
                                     <div class="mt-2">
                                         <x-input-label for="address" value="{{ __('Address') }}" class="s" />
-                                        
-                                            <textarea name="address" id=""
-                                                class="block mt-1 w-3/4 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                                                placeholder="Alamat"></textarea>
-                                        
+
+                                        <textarea name="address" id="" wire:model="form.address"
+                                            class="block mt-1 w-3/4 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                            placeholder="Alamat">{{ $form['address'] }}</textarea>
+
                                         @error('address')
                                         <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
                                         @enderror
@@ -380,7 +507,7 @@
                                     {{-- Jenis Konseling --}}
                                     <div class="mt-2">
                                         <x-input-label for="category" value="{{ __('Category') }}" class="s" />
-                                        <div x-data="{isOpen: false, selected_id: {{ old('category') ?? 'null' }}, data: [
+                                        <div x-data="{isOpen: false, selected_id: @entangle('form.category'), data: [
                                                 {id: 1, name: 'Online/Daring'},
                                                 {id: 2, name: 'Offline/Luring'},
                                             ], getData(id){
@@ -395,7 +522,7 @@
                                                     aria-labelledby="listbox-label">
                                                     <span class="flex items-center">
                                                         <span x-show="selected_id != null" class="ml-3 block truncate"
-                                                            x-text="getData(selected_id).name"></span>
+                                                            x-text="getData(selected_id)?.name"></span>
                                                         <span x-show="selected_id == null"
                                                             class="ml-3 block truncate text-slate-500">
                                                             Pilih Kategori
@@ -422,6 +549,7 @@
                                                     aria-activedescendant="listbox-option-3">
                                                     <template x-for="(item, i) in data" :key="i">
                                                         <li x-on:click="selected_id = item.id, isOpen = false"
+                                                            wire:click="form.category = item.id"
                                                             x-bind:class="selected_id === item.id ? 'bg-indigo-600 text-white' : 'text-gray-900'"
                                                             class="hover:bg-indigo-600 hover:text-white relative cursor-default select-none py-2 pl-3 pr-9">
 
@@ -444,7 +572,8 @@
                                                 </ul>
                                             </div>
 
-                                            <div class="flex gap-x-3 w-full pl-5" x-show="selected_id === 2">
+                                            {{-- Date --}}
+                                            <div class="flex gap-x-1 w-full pl-5" x-show="selected_id === 2">
                                                 <div class="w-[10%] text-icongreen">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                                         viewBox="0 0 24 24">
@@ -454,18 +583,16 @@
                                                 </div>
                                                 {{-- Tanggal --}}
                                                 <div>
-                                                    <div
-                                                        class="border border-primary relative rounded-xl overflow-hidden w-full ml-auto py-2 px-4 bg-white">
-                                                        <input type="date" placeholder="Tanggal" name="date" id=""
-                                                            value="{{ old('date') }}"
-                                                            class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
-                                                    </div>
+                                                    <x-text-input id="date" name="date" type="date" wire:model="form.date"
+                                                    class="mt-1 block w-full" />
                                                     @error('date')
                                                     <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
                                                     @enderror
                                                 </div>
                                             </div>
-                                            <div class="flex gap-x-3 w-full pl-5" x-show="selected_id === 2">
+
+                                            {{-- Time --}}
+                                            <div class="flex gap-x-1 w-full pl-5" x-show="selected_id === 2">
                                                 <div class="w-[10%] text-icongreen">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32"
                                                         viewBox="0 0 24 24">
@@ -475,12 +602,8 @@
                                                 </div>
                                                 {{-- Jam --}}
                                                 <div>
-                                                    <div
-                                                        class="border border-primary relative rounded-xl overflow-hidden w-full ml-auto py-2 px-4 bg-white">
-                                                        <input type="time" placeholder="Jam" name="time" id=""
-                                                            value="{{ old('time') }}"
-                                                            class="outline-none border-none w-full h-full focus:outline-none focus:ring-0">
-                                                    </div>
+                                                    <x-text-input id="time" name="time" type="time" wire:model="form.time"
+                                                    class="mt-1 block w-full" />
                                                     @error('time')
                                                     <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
                                                     @enderror
@@ -492,33 +615,64 @@
                                         <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
-
                                     {{-- Deskripsi Masalah --}}
                                     <div class="mt-2">
                                         <x-input-label for="description" value="{{ __('Description') }}" class="s" />
-                                            <textarea name="description" id=""
-                                                class="block mt-1 w-3/4 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
-                                                placeholder="Deskripsi Masalah"></textarea>
-                                        
+                                        <textarea name="description" id="" wire:model="form.description"
+                                            class="block mt-1 w-3/4 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                            placeholder="Deskripsi Masalah">{{ $form['description'] }}</textarea>
+
                                         @error('description')
                                         <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
                                         @enderror
                                     </div>
+                                    {{-- Berlangsung --}}
+                                    <div class="mt-4">
+                                        <div class=" flex gap-4 items-center" x-data="{toggleStatus: {{ $form['berlangsung'] }}}">
+
+                                            <x-input-label for="status" value="Berlangsung" class="" />
+
+                                            <button class="shadow-lg w-16 rounded-full flex items-center p-1"
+                                                :class="{{ $form['berlangsung'] }} ? 'bg-primary' : 'bg-white' " 
+                                                wire:click.prevent="changeStatusKonseling"
+                                                @click.prevent="toggleStatus = !toggleStatus">
+                                                <div class="w-6 h-6 rounded-full transition-all"
+                                                    :class="{{ $form['berlangsung'] }} ? 'bg-white ml-auto' : 'bg-slate-600'">
+                                                </div>
+                                            </button>
+
+
+                                        </div>
+                                    </div>
+                                    @if ($form['berlangsung'] == 'false')
+                                    {{-- Note --}}
+                                    <div class="mt-2">
+                                        <x-input-label for="note" value="{{ __('Note Hasil') }}" class="s" />
+                                        <textarea name="note" id="" wire:model="form.note"
+                                            class="block mt-1 w-3/4 border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
+                                            placeholder="Deskripsi Masalah">{{ $form['note'] }}</textarea>
+
+                                        @error('note')
+                                        <p class="text-red-500 text-sm text-start mt-2">{{ $message }}</p>
+                                        @enderror
+                                    </div>
+                                    @endif
+
 
                                     <div class="mt-4 flex justify-end">
-                                        <x-secondary-button x-on:click="$dispatch('close')" 
+                                        <x-secondary-button x-on:click="$dispatch('close')"
                                             wire:click.prevent="resetForm">
                                             {{ __('Cancel') }}
                                         </x-secondary-button>
 
                                         @if ($selectedKonseling)
                                         <x-primary-button class="ms-3" x-on:click="$dispatch('close')"
-                                            wire:click.prevent="updateUser">
+                                            wire:click.prevent="updateKonseling">
                                             {{ __('Update') }}
                                         </x-primary-button>
                                         @else
                                         <x-primary-button class="ms-3" x-on:click="$dispatch('close')"
-                                            wire:click.prevent="createUser">
+                                            wire:click.prevent="createKonseling">
                                             {{ __('Create') }}
                                         </x-primary-button>
                                         @endif

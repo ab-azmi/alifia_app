@@ -41,6 +41,51 @@ class Psikolog extends Component
         'location' => '',
     ];
 
+    public $days = [
+        [
+            'hari' => 'senin',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+        [
+            'hari' => 'selasa',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+        [
+            'hari' => 'rabu',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+        [
+            'hari' => 'kamis',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+        [
+            'hari' => 'jumat',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+        [
+            'hari' => 'sabtu',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+        [
+            'hari' => 'minggu',
+            'jam_mulai' => '',
+            'jam_selesai' => '',
+            'active' => 'false',
+        ],
+    ];
+
     public function render()
     {
         $users = User::whereHas('roles', function ($query) {
@@ -151,5 +196,56 @@ class Psikolog extends Component
             'location' => '',
         ];
         $this->selectedUser = null;
+        $this->resetDays();
+    }
+
+    public function editWorkDays($id){
+        $user = User::with('dataPsikolog')->find($id);
+        $this->selectedUser = $id;
+        
+        //foreach praktik
+        foreach($user->dataPsikolog->praktik as $key => $day){
+           //if day->hari exists in days[hari]
+              $index = array_search($day->hari, array_column($this->days, 'hari'));
+                if($index !== false){
+                    $this->days[$index]['jam_mulai'] = $day->jam_mulai;
+                    $this->days[$index]['jam_selesai'] = $day->jam_selesai;
+                    $this->days[$index]['active'] = 'true';
+                }
+        }
+    }
+
+    public function resetDays(){
+        $this->selectedUser = null;
+        foreach($this->days as $key => $day){
+            $this->days[$key]['jam_mulai'] = '';
+            $this->days[$key]['jam_selesai'] = '';
+            $this->days[$key]['active'] = 'false';
+        }
+    }
+
+    public function changeDayStatus($hari){
+        $index = array_search($hari, array_column($this->days, 'hari'));
+
+        if($this->days[$index]['active'] === 'true'){
+            $this->days[$index]['active'] = 'false';
+        }else{
+            $this->days[$index]['active'] = 'true';
+        }
+    }
+
+    public function updateWorkDays(){
+        $user = User::find($this->selectedUser);
+        $user->dataPsikolog->praktik()->delete();
+        foreach($this->days as $day){
+            if($day['active'] === 'true'){
+                $user->dataPsikolog->praktik()->create([
+                    'hari' => $day['hari'],
+                    'jam_mulai' => $day['jam_mulai'],
+                    'jam_selesai' => $day['jam_selesai'],
+                ]);
+            }
+        }
+        $this->resetDays();
     }
 }

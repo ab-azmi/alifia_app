@@ -138,6 +138,10 @@
                                                     </g>
                                                 </svg>
                                             </button>
+                                            <button wire:click="editWorkDays({{ $user->id }})" x-on:click.prevent="$dispatch('open-modal', 'work-hours')"
+                                                class="px-2 py-2 bg-icongreen text-white rounded">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"><g fill="none"><path d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"/><path fill="currentColor" d="M17.5 3a3.5 3.5 0 0 1 2.526 5.923A8.962 8.962 0 0 1 21 13a8.977 8.977 0 0 1-2.936 6.65l.643.643a1 1 0 0 1-1.414 1.414l-.868-.868A8.96 8.96 0 0 1 12 22a8.96 8.96 0 0 1-4.425-1.161l-.868.868a1 1 0 0 1-1.414-1.414l.643-.643A8.977 8.977 0 0 1 3 13a8.96 8.96 0 0 1 .974-4.077A3.5 3.5 0 1 1 9.307 4.41A8.996 8.996 0 0 1 12 4c.938 0 1.842.143 2.693.41A3.494 3.494 0 0 1 17.5 3M12 8a1 1 0 0 0-.993.883L11 9v3.986a.998.998 0 0 0 .202.617l.09.104l2.106 2.105a1 1 0 0 0 1.498-1.32l-.084-.094L13 12.586V9a1 1 0 0 0-1-1"/></g></svg>
+                                            </button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -186,6 +190,7 @@
                                         @endif
                                     </h2>
 
+                                    {{-- Select User --}}
                                     @if (!$selectedUser)
                                     <div class="mt-4" >
                                         <x-input-label for="" value="{{ __('Select User Account') }}" class="" />
@@ -245,6 +250,7 @@
                                     </div>  
                                     @endif
 
+                                    {{-- Name --}}
                                     <div class="mt-4">
                                         <x-input-label for="name" value="{{ __('Name') }}" class="s" />
 
@@ -253,6 +259,7 @@
 
                                     </div>
 
+                                    {{-- Degree --}}
                                     <div class="mt-4">
                                         <x-input-label for="degree" value="{{ __('Degree') }}" class="" />
 
@@ -262,6 +269,7 @@
 
                                     </div>
 
+                                    {{-- Session --}}
                                     <div class="mt-4">
                                         <x-input-label for="session" value="{{ __('Session') }}" class="" />
 
@@ -272,6 +280,7 @@
 
                                     </div>
 
+                                    {{-- Experience --}}
                                     <div class="mt-4">
                                         <x-input-label for="experience" value="{{ __('Experience') }}" class="" />
 
@@ -282,6 +291,7 @@
 
                                     </div>
 
+                                    {{-- Status --}}
                                     <div class="mt-4 flex gap-2 items-center" x-data="{ toggleStatus: @entangle('form.status'), changeStatus(){
                                         this.toggleStatus = !this.toggleStatus;
                                         $wire.form.status = this.toggleStatus;
@@ -296,6 +306,7 @@
 
                                     </div>
 
+                                    {{-- Location --}}
                                     <div class="mt-4">
                                         <x-input-label for="location" value="{{ __('Location') }}" class="" />
 
@@ -321,6 +332,60 @@
                                             {{ __('Create') }}
                                         </x-primary-button>
                                         @endif
+                                    </div>
+                                </form>
+
+                            </div>
+                        </x-modal>
+
+                        {{-- Modal Work Hours --}}
+                        <x-modal name="work-hours" focusable>
+                            <div class="p-6">
+                                <form method="post" class="p-6">
+                                    @csrf
+                                    @method('post')
+
+                                    <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                                        Psikolog Work Hours
+                                    </h2>
+
+                                    @foreach ($days as $key => $day)
+                                    <div class="mt-4">
+                                        <div class=" flex gap-10 items-center" x-data="{toggleStatus: {{ $day['active'] }}}">
+                                            <div class="flex items-center gap-2">
+                                                <x-input-label for="status" value="{{ $day['hari'] }}" class="" />
+
+                                                <button class="shadow-lg w-16 rounded-full flex items-center p-1" :class="{{ $day['active'] }} ? 'bg-primary' : 'bg-white' "
+                                                    wire:click.prevent="changeDayStatus('{{ $day['hari'] }}')" @click.prevent="toggleStatus = !toggleStatus">
+                                                    <div class="w-6 h-6 rounded-full transition-all" :class="{{ $day['active'] }} ? 'bg-white ml-auto' : 'bg-slate-600'">
+                                                    </div>
+                                                </button>
+                                            </div>
+                                            
+                                            <div class="flex items-center gap-2">
+                                                <x-input-label for="status" value="{{ __('Mulai') }}" class="" />
+                                                <input wire:model="days.{{ $key }}.jam_mulai" value="{{ $day['jam_mulai'] }}" type="time" name="start" id="" class="block border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                            </div>
+                                            <div class="flex items-center gap-2">
+                                                <x-input-label for="status" value="{{ __('Selesai') }}" class="" />
+                                                <input wire:model="days.{{ $key }}.jam_selesai" value="{{ $day['jam_selesai'] }}" type="time" name="start" id="" class="block border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                    </div>  
+                                    @endforeach
+                                   
+
+                                    <div class="mt-4 flex justify-end">
+                                        <x-secondary-button x-on:click="$dispatch('close')" 
+                                            wire:click.prevent="resetForm">
+                                            {{ __('Cancel') }}
+                                        </x-secondary-button>
+                                        <x-primary-button class="ms-3" x-on:click="$dispatch('close')"
+                                            wire:click.prevent="updateWorkDays">
+                                            {{ __('Update') }}
+                                        </x-primary-button>
                                     </div>
                                 </form>
 
