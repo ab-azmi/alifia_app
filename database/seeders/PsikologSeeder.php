@@ -25,6 +25,7 @@ class PsikologSeeder extends Seeder
             'location' => 'Jl. Raya Bogor, No. 12, Jakarta',
             'user_id' => User::factory()->create([
                 'name' => 'Marshela',
+                'email' => 'marshela@gmail.com'
             ])->assignRole('psikolog')->id,
         ]);
 
@@ -59,6 +60,7 @@ class PsikologSeeder extends Seeder
             'location' => 'Jl. Raya Bogor, No. 12, Jakarta',
             'user_id' => User::factory()->create([
                 'name' => 'Ghanny',
+                'email' => 'ghanny@gmail.com'
             ])->assignRole('psikolog')->id,
         ]);
 
@@ -88,6 +90,7 @@ class PsikologSeeder extends Seeder
             'location' => 'Jl. Raya Bogor, No. 12, Jakarta',
             'user_id' => User::factory()->create([
                 'name' => 'Kirana',
+                'email' => 'kirana@gmail.com'
             ])->assignRole('psikolog')->id,
         ]);
 
@@ -122,6 +125,7 @@ class PsikologSeeder extends Seeder
             'location' => 'Jl. Raya Bogor, No. 12, Jakarta',
             'user_id' => User::factory()->create([
                 'name' => 'Kevin',
+                'email' => 'kevin@gmail.com'
             ])->assignRole('psikolog')->id,
         ]);
 
@@ -151,6 +155,7 @@ class PsikologSeeder extends Seeder
             'location' => 'Jl. Raya Bogor, No. 12, Jakarta',
             'user_id' => User::factory()->create([
                 'name' => 'Fakhri',
+                'email' => 'fakhri@gmail.com'
             ])->assignRole('psikolog')->id,
         ]);
 
@@ -180,6 +185,7 @@ class PsikologSeeder extends Seeder
             'location' => 'Jl. Raya Bogor, No. 12, Jakarta',
             'user_id' => User::factory()->create([
                 'name' => 'Bella',
+                'email' => 'bella@gmail.com'
             ])->assignRole('psikolog')->id,
         ]);
 
