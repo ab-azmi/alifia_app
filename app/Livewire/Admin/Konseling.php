@@ -136,7 +136,7 @@ class Konseling extends Component
                 'category' => $this->form['category'],
                 'date' => $this->form['date'],
                 'time' => $this->form['time'],
-                'berlangsung' => $this->form['berlangsung'] == 'true' ? true : false,
+                'berlangsung' => $this->form['berlangsung'] == 'true' ? 1 : 2,
                 'description' => $this->form['description'],
                 'note' => $this->form['note'],
             ]);
@@ -162,7 +162,7 @@ class Konseling extends Component
             'category' => $this->form['category'],
             'date' => $this->form['date'],
             'time' => $this->form['time'],
-            'berlangsung' => $this->form['berlangsung'] == 'true' ? true : false,
+            'berlangsung' => $this->form['berlangsung'] == 'true' ? 1 : 2,
             'description' => $this->form['description'],
             'note' => $this->form['note'],
         ]);
