@@ -23,9 +23,9 @@ class Dashboard extends Component
 
             $offline_konseling = \App\Models\Konseling::where('category', 2)->count();
 
-            $latest_konseling = \App\Models\Konseling::with(['psikolog.dataPsikolog', 'client'])->where('berlangsung', true)->orderBy('created_at', 'desc')->limit(5)->get();
+            $latest_konseling = \App\Models\Konseling::with(['psikolog.dataPsikolog', 'client'])->where('berlangsung', 1)->orderBy('created_at', 'desc')->limit(5)->get();
 
-            $finished_konseling = \App\Models\Konseling::with(['psikolog.dataPsikolog', 'client'])->where('berlangsung', false)->orderBy('created_at', 'desc')->limit(5)->get();
+            $finished_konseling = \App\Models\Konseling::with(['psikolog.dataPsikolog', 'client'])->where('berlangsung', 2)->orderBy('created_at', 'desc')->limit(5)->get();
         } catch (\Throwable $th) {
             dd($th->getMessage());
         }

@@ -102,7 +102,7 @@
                                             class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white flex gap-2 items-center">
                                             {{ $kon->psikolog?->dataPsikolog?->name }} {{ $kon->psikolog?->dataPsikolog?->degree }}
                                         </th>
-                                        <td class="px-4 py-3">{{ $kon->client?->name }}x</td>
+                                        <td class="px-4 py-3">{{ $kon->client?->name }}</td>
                                         <td class="px-4 py-3">{{ $kon->phone }}</td>
 
                                         <td class="px-4 py-3 text-white flex gap-1">
@@ -138,10 +138,10 @@
                                         </td>
                                         <td class="px-4 py-3 text-white flex gap-1">
                                             <span @class(['px-2 py-1 rounded', 'bg-green-700'=>
-                                                $kon->berlangsung == true,
-                                                'bg-red-500' => $kon->berlangsung == false,
+                                                $kon->berlangsung == 1,
+                                                'bg-red-500' => $kon->berlangsung == 2,
                                                 ])>
-                                                @if ($kon->berlangsung)
+                                                @if ($kon->berlangsung == 1)
                                                 Aktif
                                                 @else
                                                 Selesai
